@@ -46,9 +46,7 @@ function BarangMasuk(props) {
             <div className="col-12">
               <div className="card">
                 <div className="card-header">
-                  <h3 className="card-title">
-                    List Barang Masuk
-                  </h3>
+                  <h3 className="card-title">List Barang Masuk</h3>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">
