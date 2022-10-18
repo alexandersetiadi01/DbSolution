@@ -28,9 +28,7 @@ function BarangMasuk(props) {
             <div className="col-12">
               <div className="card">
                 <div className="card-header">
-                  <h3 className="card-title">
-                    List Barang Masuk
-                  </h3>
+                  <h3 className="card-title">List Barang Masuk</h3>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">
@@ -45,6 +43,7 @@ function BarangMasuk(props) {
                         <th>Platform(s)</th>
                         <th>Engine version</th>
                         <th>CSS grade</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -54,6 +53,26 @@ function BarangMasuk(props) {
                         <td>Embedded devices</td>
                         <td>-</td>
                         <td>A</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-primary"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-danger"
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-success"
+                          >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </td>
                       </tr>
                       <tr>
                         <td>Misc</td>
@@ -61,6 +80,26 @@ function BarangMasuk(props) {
                         <td>Embedded devices</td>
                         <td>-</td>
                         <td>X</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-primary"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-danger"
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-success"
+                          >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </td>
                       </tr>
                       <tr>
                         <td>Misc</td>
@@ -68,6 +107,26 @@ function BarangMasuk(props) {
                         <td>Text only</td>
                         <td>-</td>
                         <td>X</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-primary"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-danger"
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-success"
+                          >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </td>
                       </tr>
                       <tr>
                         <td>Misc</td>
@@ -75,6 +134,26 @@ function BarangMasuk(props) {
                         <td>Text only</td>
                         <td>-</td>
                         <td>X</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-primary"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-danger"
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-success"
+                          >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </td>
                       </tr>
                       <tr>
                         <td>Misc</td>
@@ -82,6 +161,26 @@ function BarangMasuk(props) {
                         <td>Windows Mobile 6</td>
                         <td>-</td>
                         <td>C</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-primary"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-danger"
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-success"
+                          >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </td>
                       </tr>
                       <tr>
                         <td>Misc</td>
@@ -89,6 +188,26 @@ function BarangMasuk(props) {
                         <td>PSP</td>
                         <td>-</td>
                         <td>C</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-primary"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-danger"
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-success"
+                          >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </td>
                       </tr>
                       <tr>
                         <td>Other browsers</td>
@@ -96,6 +215,26 @@ function BarangMasuk(props) {
                         <td>-</td>
                         <td>-</td>
                         <td>U</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-primary"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-danger"
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-block btn-success"
+                          >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </td>
                       </tr>
                     </tbody>
                     <tfoot>
@@ -105,6 +244,7 @@ function BarangMasuk(props) {
                         <th>Platform(s)</th>
                         <th>Engine version</th>
                         <th>CSS grade</th>
+                        <th>Actions</th>
                       </tr>
                     </tfoot>
                   </table>
