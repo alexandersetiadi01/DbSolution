@@ -1,6 +1,24 @@
 import React from "react";
 
+import TabelBarang from '../../Table/TabelBarang'
+
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  
+];
+
+
 function BarangMasuk(props) {
+
   return (
     <div className="content-wrapper">
       {/* Content Header (Page header) */}
@@ -34,80 +52,7 @@ function BarangMasuk(props) {
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">
-                  <table
-                    id="example1"
-                    className="table table-bordered table-striped"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Misc</td>
-                        <td>NetFront 3.4</td>
-                        <td>Embedded devices</td>
-                        <td>-</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Misc</td>
-                        <td>Dillo 0.8</td>
-                        <td>Embedded devices</td>
-                        <td>-</td>
-                        <td>X</td>
-                      </tr>
-                      <tr>
-                        <td>Misc</td>
-                        <td>Links</td>
-                        <td>Text only</td>
-                        <td>-</td>
-                        <td>X</td>
-                      </tr>
-                      <tr>
-                        <td>Misc</td>
-                        <td>Lynx</td>
-                        <td>Text only</td>
-                        <td>-</td>
-                        <td>X</td>
-                      </tr>
-                      <tr>
-                        <td>Misc</td>
-                        <td>IE Mobile</td>
-                        <td>Windows Mobile 6</td>
-                        <td>-</td>
-                        <td>C</td>
-                      </tr>
-                      <tr>
-                        <td>Misc</td>
-                        <td>PSP browser</td>
-                        <td>PSP</td>
-                        <td>-</td>
-                        <td>C</td>
-                      </tr>
-                      <tr>
-                        <td>Other browsers</td>
-                        <td>All others</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>U</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
-                      </tr>
-                    </tfoot>
-                  </table>
+                  <TabelBarang data={rows} />
                 </div>
                 {/* /.card-body */}
               </div>
