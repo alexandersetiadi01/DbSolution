@@ -1,6 +1,7 @@
 import React from "react";
 
-import TabelBarang from '../../Table/TabelBarang'
+import TabelBarang from '../../Table/TabelBarang';
+import SearchBarang from "../../Table/SearchBarang";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -18,6 +19,15 @@ const rows = [
 
 
 function BarangMasuk(props) {
+
+ 
+  const [searchValue, changeSearchValue] = React.useState("")
+
+  const changeValue = (event) =>{
+    changeSearchValue(event.target.value);
+    // console.log('Div lost focus');
+    
+  }
 
   return (
     <div className="content-wrapper">
@@ -45,8 +55,22 @@ function BarangMasuk(props) {
           <div className="row">
             <div className="col-12">
               <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">List Barang Masuk</h3>
+                <div 
+                className="card-header" 
+                style={{
+                  display: "flex",
+                  alignItems:'center' 
+                }}>
+                  <div className="card-header-title">
+                    <h3 className="card-title">List Barang Masuk</h3>
+                  </div>
+                  <div className="card-search" style={{marginLeft:'auto'}}>
+                    <SearchBarang 
+                      value={searchValue} 
+                      changeValue={event => changeValue(event)} 
+                      
+                    />
+                  </div>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">

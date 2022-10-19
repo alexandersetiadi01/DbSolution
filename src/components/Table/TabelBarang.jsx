@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import { flexbox } from '@mui/system';
 
 
 export default class TabelBarang extends Component {
@@ -42,10 +43,11 @@ export default class TabelBarang extends Component {
       const emptyRows =
       this.state.page > 0 ? Math.max(0, (1 + this.state.page) * this.state.rowPage - this.props.data.length) : 0;
 
-      console.log(this.state.page)
+
 
       return (
             <div>
+              
               <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>

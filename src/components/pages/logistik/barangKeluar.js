@@ -1,5 +1,7 @@
 import React from "react";
+
 import TabelBarang from "../../Table/TabelBarang";
+import SearchBarang from "../../Table/SearchBarang";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -41,8 +43,18 @@ function BarangKeluar(props) {
           <div className="row">
             <div className="col-12">
               <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">List Barang Keluar</h3>
+              <div 
+                className="card-header" 
+                style={{
+                  display: "flex",
+                  alignItems:'center' 
+                }}>
+                  <div className="card-title">
+                    <h3 className="card-title">List Barang Keluar</h3>
+                  </div>
+                  <div className="card-search" style={{marginLeft:'auto'}}>
+                    <SearchBarang value={''} />
+                  </div>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">
