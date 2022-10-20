@@ -43,9 +43,9 @@ export default class SearchBarang extends Component {
             width: '100%',
             [theme.breakpoints.up('sm')]: {
             width: '20ch',
-            '&:focus': {
-                width: '30ch',
-            },
+            // '&:focus': {
+            //     width: '30ch',
+            // },
             },
         },
         }));
