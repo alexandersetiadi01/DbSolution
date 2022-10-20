@@ -42,10 +42,10 @@ export default class SearchBarang extends Component {
             transition: theme.transitions.create('width'),
             width: '100%',
             [theme.breakpoints.up('sm')]: {
-            width: '20ch',
-            '&:focus': {
-                width: '30ch',
-            },
+            width: '25ch',
+            // '&:focus': {
+            //     width: '30ch',
+            // },
             },
         },
         }));

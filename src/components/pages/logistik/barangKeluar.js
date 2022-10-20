@@ -17,6 +17,14 @@ const rows = [
 
 
 function BarangKeluar(props) {
+  const [searchValue, changeSearchValue] = React.useState("")
+
+  const changeValue = (event) =>{
+    changeSearchValue(event.target.value);
+    // console.log('Div lost focus');
+    
+  }
+
   return (
     <div className="content-wrapper">
       {/* Content Header (Page header) */}
@@ -53,7 +61,7 @@ function BarangKeluar(props) {
                     <h3 className="card-title">List Barang Keluar</h3>
                   </div>
                   <div className="card-search" style={{marginLeft:'auto'}}>
-                    <SearchBarang value={''} />
+                    <SearchBarang value={searchValue} changeValue={changeValue} />
                   </div>
                 </div>
                 {/* /.card-header */}

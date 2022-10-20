@@ -2,6 +2,9 @@ import React from "react";
 
 import TabelBarang from '../../Table/TabelBarang';
 import SearchBarang from "../../Table/SearchBarang";
+import AddItem from "../../Dialog/AddItem";
+
+import Button from '@mui/material/Button';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -20,14 +23,44 @@ const rows = [
 
 function BarangMasuk(props) {
 
+/*
+*
+*
+*    SEARCH
+* 
+*/
  
   const [searchValue, changeSearchValue] = React.useState("")
 
   const changeValue = (event) =>{
     changeSearchValue(event.target.value);
-    // console.log('Div lost focus');
-    
+    // console.log('Div lost focus'); 
   }
+
+  const filterSearch = (searchKey) =>{
+    const filteredRows = rows.filter((row)=>
+      row.name.toLowerCase().includes(searchKey.toLowerCase())
+    )
+    return filteredRows
+  }
+
+/*
+*
+*
+*    DIALOG
+* 
+*/
+
+  const [AddDialog, openAddDialog] = React.useState(false);
+
+  const openDialog = () =>{
+    openAddDialog(true)
+  }
+
+  const closeDialog = () =>{
+    openAddDialog(false)
+  }
+
 
   return (
     <div className="content-wrapper">
@@ -71,10 +104,14 @@ function BarangMasuk(props) {
                       
                     />
                   </div>
+                  <div className="add-item" style={{marginLeft: '5px'}}>
+                    <Button variant="contained" onClick={openDialog}>Tambah Barang</Button>
+                    <AddItem open={AddDialog} closeDialog={closeDialog} />
+                  </div>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">
-                  <TabelBarang data={rows} />
+                  <TabelBarang data={searchValue == "" ? rows : filterSearch(searchValue)} />
                 </div>
                 {/* /.card-body */}
               </div>
