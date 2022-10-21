@@ -2,29 +2,19 @@ import React, { useState } from "react";
 
 import TabelBarang from "../../Table/TabelBarang";
 import SearchBarang from "../../Table/SearchBarang";
+
 import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
+
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
+  Button,
+  Paper,
   IconButton,
-  InputLabel,
-  Switch,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
   Tooltip,
 } from "@mui/material";
+
 // import AddBarangMasuk from "../../Dialog/barangMasuk.js/AddBarangMasuk";
-import Paper from "@mui/material/Paper";
 import { Berhasil, Gagal } from "../../Dialog/notification";
+import AddItem from "../../Dialog/AddItem";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -73,6 +63,9 @@ export default function BarangMasuk(props) {
     satuan: "",
     supplier: "",
   };
+
+
+  /*Add Item Inputs*/
   const [inputs, setInputs] = useState(detail);
   const handleInputChange = (event) => {
     setInputs({ ...inputs, [event.target.name]: event.target.value });
@@ -109,6 +102,7 @@ export default function BarangMasuk(props) {
     //console.log(arrayBarang[i]);
   };
 
+  /* Search */
   const [searchValue, changeSearchValue] = React.useState("");
 
   const changeValue = (event) => {
@@ -122,6 +116,8 @@ export default function BarangMasuk(props) {
     );
     return filteredRows;
   };
+
+  /* Add Item */
 
   const [addItem, setAddItem] = React.useState(false);
 
@@ -188,13 +184,10 @@ export default function BarangMasuk(props) {
                         <AddIcon />
                       </Tooltip>
                     </IconButton>
-                    {/* <AddBarangMasuk
-                      open={addItem}
-                      detailValue={inputs}
-                      changeDetailValue={(event) => handleInputChange(event)}
-                      barang={arrayBarang}
-                      closeDialog={closeAddDialog}
-                    /> */}
+                    <AddItem 
+                      open={addItem} 
+                      closeDialog={closeAddDialog} 
+                    />
                   </div>
                 </div>
                 {/* /.card-header */}
@@ -213,169 +206,6 @@ export default function BarangMasuk(props) {
         </div>
         {/* /.container-fluid */}
       </section>
-
-      {/* dialog tambah barang masuk */}
-      <Dialog open={addItem} onClose={closeAddDialog} maxWidth="lg">
-        <DialogTitle id="addBarang">Add Barang</DialogTitle>
-        {/* <form onSubmit={addBarang}> */}
-        <DialogContent>
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                autoFocus
-                margin="dense"
-                inputRef={(value) => value && value.focus()}
-                key="namaPenerima"
-                id="namaPenerima"
-                name="namaPenerima"
-                value={inputs.namaPenerima}
-                //onChange={handleInputChange}
-                label="Nama Penerima"
-                type="text"
-                variant="standard"
-                required
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                autoFocus
-                margin="dense"
-                inputRef={(value) => value && value.focus()}
-                key="lokasi"
-                id="lokasi"
-                label="Lokasi"
-                name="lokasi"
-                value={inputs.lokasi}
-                //onChange={handleInputChange}
-                type="text"
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <InputLabel autoFocus id="cekSuratJalan" sx={{ margin: "dense" }}>
-                surat jalan
-              </InputLabel>
-              <Switch
-                id="cekSuratJalan"
-                // labelId="cekSuratJalan"
-                // inputRef={value => value && value.focus()}
-                label="Surat Jalan"
-                inputProps={{ "aria-label": "controlled" }}
-                checked={suratJalan}
-                onChange={pakaiSuratJalan}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              {suratJalan ? (
-                <TextField
-                  fullWidth
-                  autoFocus
-                  margin="dense"
-                  inputRef={(value) => value && value.focus()}
-                  key="noSuratJalan"
-                  id="noSuratJalan"
-                  label="Nomor Surat Jalan"
-                  name="noSuratJalan"
-                  value={inputs.noSuratJalan}
-                  //onChange={handleInputChange}
-                  type="text"
-                  variant="standard"
-                />
-              ) : (
-                <TextField
-                  fullWidth
-                  autoFocus
-                  margin="dense"
-                  inputRef={(value) => value && value.focus()}
-                  key="proyekAsal"
-                  id="proyekAsal"
-                  label="Proyek Asal"
-                  name="proyekAsal"
-                  value={inputs.proyekAsal}
-                  //onChange={handleInputChange}
-                  type="text"
-                  variant="standard"
-                />
-              )}
-            </Grid>
-          </Grid>
-          <TableContainer component={Paper}>
-            <IconButton onClick={addArrayBarang}>
-              <Tooltip title="Tambah Barang">
-                <AddIcon />
-              </Tooltip>
-            </IconButton>
-            <Table sx={{ width: "50vw" }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Nama Barang</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Satuan</TableCell>
-                  <TableCell>Keterangan</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {arrayBarang.map((item, index) => (
-                  <>
-                    <TableRow key={index}>
-                      <TableCell>
-                        <input
-                          type="text"
-                          name="namabarang"
-                          value={item.namabarang}
-                          //onChange={handleArrayBarang}
-                          required
-                        ></input>
-                      </TableCell>
-
-                      <TableCell>
-                        <input
-                          type="number"
-                          name="quantity"
-                          value={item.quantity}
-                          //onChange={handleArrayBarang}
-                          required
-                        ></input>
-                      </TableCell>
-
-                      <TableCell>
-                        <input
-                          type="text"
-                          name="satuan"
-                          value={item.satuan}
-                          //onChange={handleArrayBarang}
-                          required
-                        ></input>
-                      </TableCell>
-                      <TableCell>
-                        <input
-                          type="text"
-                          name="keterangan"
-                          value={item.keterangan}
-                          //onChange={handleArrayBarang}
-                        ></input>
-                      </TableCell>
-                    </TableRow>
-                  </>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </DialogContent>
-        <DialogActions>
-          <Button color="error" onClick={closeAddDialog}>
-            Cancel
-          </Button>
-          <Button onClick={addBarang}>Add</Button>
-        </DialogActions>
-        {/* </form> */}
-      </Dialog>
 
       {/* notification utk success/error */}
       <Berhasil open={berhasil} close={closeSuccess} message={message} />
