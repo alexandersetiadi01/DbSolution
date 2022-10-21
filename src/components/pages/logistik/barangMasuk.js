@@ -1,66 +1,99 @@
-import React from "react";
+import React, { useState } from "react";
 
-import TabelBarang from '../../Table/TabelBarang';
+import TabelBarang from "../../Table/TabelBarang";
 import SearchBarang from "../../Table/SearchBarang";
-import AddItem from "../../Dialog/AddItem";
-
-import Button from '@mui/material/Button';
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+import { IconButton, Tooltip } from "@mui/material";
+import AddBarangMasuk from "../../Dialog/barangMasuk.js/AddBarangMasuk";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+  createData("Cupcake", 305, 3.7, 67, 4.3),
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
 ];
 
-
 function BarangMasuk(props) {
+  const detail = {
+    namabarang: "",
+    namaPenerima: "",
+    quantity: "",
+    noSuratJalan1: "",
+    noSuratJalan2: "",
+    tgl: "",
+    lokasi: "",
+    action: "",
+    username: "",
+    proyek: "",
+    keterangan: "",
+    satuan: "",
+    supplier: "",
+  };
+  const [inputs, setInputs] = useState(detail);
+  const handleInputChange = (event) => {
+    setInputs({ ...inputs, [event.target.name]: event.target.value });
+    console.log(inputs)
+  };
 
-/*
-*
-*
-*    SEARCH
-* 
-*/
- 
-  const [searchValue, changeSearchValue] = React.useState("")
+  const [arrayBarang, setArrayBarang] = useState([]);
+  let addArrayBarang = () => {
+    setArrayBarang([
+      ...arrayBarang,
+      {
+        namabarang: "",
+        quantity: "",
+        satuan: "",
+        noSuratJalan: inputs.noSuratJalan1 + inputs.noSuratJalan2,
+        namaPenerima: inputs.namaPenerima,
+        tgl: inputs.tgl,
+        lokasi: inputs.lokasi,
+        status: "masuk",
+        username: inputs.username,
+        keterangan: "",
+        proyek: inputs.proyek,
+        supplier: inputs.supplier,
+      },
+    ]);
+  };
 
-  const changeValue = (event) =>{
+  let handleArrayBarang = (i, e) => {
+    let newArrayBarang = [...arrayBarang];
+    newArrayBarang[i][e.target.name] = e.target.value;
+    setArrayBarang(newArrayBarang);
+
+    //console.log(arrayBarang[i]);
+  };
+
+  const [searchValue, changeSearchValue] = React.useState("");
+
+  const changeValue = (event) => {
     changeSearchValue(event.target.value);
-    // console.log('Div lost focus'); 
-  }
+    // console.log('Div lost focus');
+  };
 
-  const filterSearch = (searchKey) =>{
-    const filteredRows = rows.filter((row)=>
+  const filterSearch = (searchKey) => {
+    const filteredRows = rows.filter((row) =>
       row.name.toLowerCase().includes(searchKey.toLowerCase())
-    )
-    return filteredRows
-  }
+    );
+    return filteredRows;
+  };
 
-/*
-*
-*
-*    DIALOG
-* 
-*/
+  const [addItem, setAddItem] = React.useState(false);
 
-  const [AddDialog, openAddDialog] = React.useState(false);
+  const openAddDialog = () => {
+    setAddItem(true);
+  };
 
-  const openDialog = () =>{
-    openAddDialog(true)
-  }
-
-  const closeDialog = () =>{
-    openAddDialog(false)
-  }
-
+  const closeAddDialog = () => {
+    setAddItem(false);
+  };
 
   return (
     <div className="content-wrapper">
@@ -88,30 +121,42 @@ function BarangMasuk(props) {
           <div className="row">
             <div className="col-12">
               <div className="card">
-                <div 
-                className="card-header" 
-                style={{
-                  display: "flex",
-                  alignItems:'center' 
-                }}>
+                <div
+                  className="card-header"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
                   <div className="card-header-title">
                     <h3 className="card-title">List Barang Masuk</h3>
                   </div>
-                  <div className="card-search" style={{marginLeft:'auto'}}>
-                    <SearchBarang 
-                      value={searchValue} 
-                      changeValue={event => changeValue(event)} 
-                      
+                  <div className="card-search" style={{ marginLeft: "auto" }}>
+                    <SearchBarang
+                      value={searchValue}
+                      changeValue={(event) => changeValue(event)}
                     />
                   </div>
-                  <div className="add-item" style={{marginLeft: '5px'}}>
-                    <Button variant="contained" onClick={openDialog}>Tambah Barang</Button>
-                    <AddItem open={AddDialog} closeDialog={closeDialog} />
+                  <div className="add-item" style={{ marginLeft: "5px" }}>
+                    <IconButton onClick={openAddDialog}>
+                      <Tooltip title="Add">
+                        <AddIcon />
+                      </Tooltip>
+                    </IconButton>
+                    <AddBarangMasuk
+                      open={addItem}
+                      detailValue={inputs}
+                      changeDetailValue={(event) => handleInputChange(event)}
+                      barang={arrayBarang}
+                      closeDialog={closeAddDialog}
+                    />
                   </div>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">
-                  <TabelBarang data={searchValue == "" ? rows : filterSearch(searchValue)} />
+                  <TabelBarang
+                    data={searchValue === "" ? rows : filterSearch(searchValue)}
+                  />
                 </div>
                 {/* /.card-body */}
               </div>

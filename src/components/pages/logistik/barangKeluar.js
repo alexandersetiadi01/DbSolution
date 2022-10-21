@@ -2,6 +2,9 @@ import React from "react";
 
 import TabelBarang from "../../Table/TabelBarang";
 import SearchBarang from "../../Table/SearchBarang";
+import { IconButton, Tooltip } from "@mui/material";
+import AddItem from "../../Dialog/AddItem";
+import AddIcon from '@mui/icons-material/Add';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -23,6 +26,16 @@ function BarangKeluar(props) {
     changeSearchValue(event.target.value);
     // console.log('Div lost focus');
     
+  }
+
+  const [addItem, setAddItem] = React.useState(false);
+
+  const openAddDialog = () =>{
+    setAddItem(true)
+  }
+
+  const closeAddDialog = () =>{
+    setAddItem(false)
   }
 
   return (
@@ -62,6 +75,14 @@ function BarangKeluar(props) {
                   </div>
                   <div className="card-search" style={{marginLeft:'auto'}}>
                     <SearchBarang value={searchValue} changeValue={changeValue} />
+                  </div>
+                  <div className="add-item" style={{marginLeft: '5px'}}>
+                    <IconButton onClick={openAddDialog}>
+                      <Tooltip title="Add">
+                        <AddIcon/>
+                      </Tooltip>
+                    </IconButton>
+                    <AddItem open={addItem} closeDialog={closeAddDialog} />
                   </div>
                 </div>
                 {/* /.card-header */}
