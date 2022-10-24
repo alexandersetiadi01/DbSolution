@@ -7,7 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import TablePagination from "@mui/material/TablePagination";
+import { IconButton, Tooltip } from "@mui/material";
 
 export default class TabelBarang extends Component {
   constructor(props) {
@@ -63,6 +67,9 @@ export default class TabelBarang extends Component {
                 <TableCell style={tableHeadStyle} align="right">
                   CSS grade
                 </TableCell>
+                <TableCell style={tableHeadStyle} align="right">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -83,8 +90,18 @@ export default class TabelBarang extends Component {
                     <TableCell align="center">{row.fat}</TableCell>
                     <TableCell align="center">{row.carbs}</TableCell>
                     <TableCell align="center">{row.protein}</TableCell>
-                    {/* <TableCell align="right">
-                    </TableCell> */}
+                    <TableCell align="right">
+                      <Tooltip title="Edit">
+                        <IconButton onClick={() => window.alert("edit " + row.name) }color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="delete">
+                        <IconButton onClick={() => window.alert("delete " + row.name) } color="error">
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
                   </TableRow>
                 ))}
               {emptyRows > 0 && (

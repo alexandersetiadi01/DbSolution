@@ -103,7 +103,7 @@ export default function BarangMasuk(props) {
   };
 
   /* Search */
-  const [searchValue, changeSearchValue] = React.useState("");
+  const [searchValue, changeSearchValue] = useState("");
 
   const changeValue = (event) => {
     changeSearchValue(event.target.value);
@@ -119,7 +119,7 @@ export default function BarangMasuk(props) {
 
   /* Add Item */
 
-  const [addItem, setAddItem] = React.useState(false);
+  const [addItem, setAddItem] = useState(false);
 
   const openAddDialog = () => {
     setAddItem(true);
@@ -127,8 +127,6 @@ export default function BarangMasuk(props) {
 
   const closeAddDialog = () => {
     setAddItem(false);
-    setInputs("");
-    setArrayBarang([]);
   };
 
   const addBarang = () => {
@@ -184,9 +182,9 @@ export default function BarangMasuk(props) {
                         <AddIcon />
                       </Tooltip>
                     </IconButton>
-                    <AddItem 
+                    <AddItem
                       open={addItem} 
-                      closeDialog={closeAddDialog} 
+                      close={closeAddDialog} 
                     />
                   </div>
                 </div>
