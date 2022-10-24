@@ -1,5 +1,7 @@
 import React from "react";
 
+import LogoutIcon from '@mui/icons-material/Logout';
+
 export default function header() {
   return (
     <div>
@@ -90,6 +92,24 @@ export default function header() {
               </a>
             </div>
           </li>
+
+          <li className="nav-item dropdown">
+            <a className="nav-link" data-toggle="dropdown" href="#">
+              <i className="far fa-user" />
+            </a>
+            <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <div className="dropdown-divider" />
+              <a href="/proyek" className="dropdown-item">
+                <i className="fa fa-building mr-2" /> Ganti Proyek
+              </a>
+              <div className="dropdown-divider" />
+              <a href="/" className="dropdown-item">
+                <LogoutIcon style={{marginRight:'0.5rem'}} fontSize='small' />
+                   Keluar
+              </a>
+            </div>
+          </li>
+
           <li className="nav-item">
             <a
               className="nav-link"

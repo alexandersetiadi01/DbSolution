@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Outlet } from 'react-router-dom';
 import './App.css';
 import Footer from './components/navbar/Footer';
 import Header from './components/navbar/Header';
@@ -9,31 +9,61 @@ import BarangKeluar from "./components/pages/logistik/barangKeluar";
 import Inventory from "./components/pages/logistik/Inventory";
 import RAP from './components/pages/RAP/RAP';
 import Progress from './components/pages/RAP/Progress';
+import { Proyek } from './components/pages/user/Proyek';
+
+function LoginLayout (){
+  return (
+    <div className="login-wrapper" style={{
+      position:'absolute',
+      top:'0px',
+      right:'0px',
+      bottom:'0px',
+      left:'0px',
+      
+    }}>
+      <Outlet />
+    </div>
+  )
+}
+
+function AppLayout(){
+  return(
+    <div className="wrapper">
+      <Header/>
+      <Sidebar/>
+      <Outlet />
+      <Footer/>
+    </div>
+  )
+}
 
 function App() {
   
   return (
     <div className="wrapper">
-      <Header/>
-      <Sidebar/>
       <Routes>
 
-        <Route path="/Login" element={<Login />}></Route>
-
         {/* User */}
-    
-        {/* logistik */}
-        <Route path="/Logistik/barangMasuk" element={<BarangMasuk />}></Route>
-        <Route path="/Logistik/barangKeluar" element={<BarangKeluar />}></Route>
-        <Route path="/Logistik/Inventory" element={<Inventory />}></Route>
+        <Route path="/" element={<LoginLayout />}>
+          <Route index element={<Login />}></Route>
+          <Route path='proyek' element={<Proyek />}></Route>
+        </Route>
 
-        {/* RAP */}
-        <Route path="/RAP/detailRAP" element={<RAP />}></Route>
-        <Route path="/RAP/Progress" element={<Progress />}></Route>
 
-        <Route path="/" element={<Login />}></Route>
+        <Route path='/dashboard' element={<AppLayout />}>
+          <Route index element={<BarangMasuk />}></Route>
+          {/* logistik */}
+          <Route path="Logistik/barangMasuk" element={<BarangMasuk />}></Route>
+          <Route path="Logistik/barangKeluar" element={<BarangKeluar />}></Route>
+          <Route path="Logistik/Inventory" element={<Inventory />}></Route>
+
+          {/* RAP */}
+          <Route path="RAP/detailRAP" element={<RAP />}></Route>
+          <Route path="RAP/Progress" element={<Progress />}></Route>
+        </Route>
+
       </Routes>
-      <Footer/>
+      
     </div>
   );
 }
