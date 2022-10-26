@@ -27,6 +27,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
@@ -43,11 +44,11 @@ const proyekAsal = [
 const barang = [
   {
     kodeBarang: 1,
-    namabarang: "A",
+    namaBarang: "A",
   },
   {
     kodeBarang: 2,
-    namabarang: "B",
+    namaBarang: "B",
   },
 ];
 
@@ -64,7 +65,7 @@ const lokasi = [
 
 export default function AddItem(props) {
   const detail = {
-    namabarang: "",
+    namaBarang: "",
     namaPenerima: "",
     quantity: "",
     // noSuratJalan1: "",
@@ -91,7 +92,7 @@ export default function AddItem(props) {
     setArrayBarang([
       ...arrayBarang,
       {
-        namabarang: "",
+        namaBarang: "",
         quantity: "",
         satuan: "",
         noSuratJalan: inputs.noSuratJalan,
@@ -302,21 +303,21 @@ export default function AddItem(props) {
                             // autoFocus
                             margin="dense"
                             labelId="Nama Barang"
-                            id="namabarang"
-                            name="namabarang"
-                            placeholder="namabarang"
+                            id="namaBarang"
+                            name="namaBarang"
+                            placeholder="namaBarang"
                             variant="standard"
                             type="text"
                             //   InputProps={{ inputProps: { maxLength: 6 } }}
-                            defaultValue={inputs.namabarang}
-                            value={inputs.namabarang}
+                            defaultValue={inputs.namaBarang}
+                            value={inputs.namaBarang}
                             onChange={handleInputChange}
                             validators={["required"]}
                             errorMessages={["required"]}
                           >
                             {barang.map((item, index) => (
                               <MenuItem key={index} value={item.kodeBarang}>
-                                {item.namabarang}
+                                {item.namaBarang}
                               </MenuItem>
                             ))}
                           </Select>
@@ -553,7 +554,7 @@ export default function AddItem(props) {
 //                                             <TableCell>
 //                                                 <input
 //                                                     type="text"
-//                                                     name="namabarang"
+//                                                     name="namaBarang"
 //                                                     value={item.namaBarang}
 //                                                     //onChange={handleArrayBarang}
 //                                                     disabled
@@ -604,8 +605,8 @@ export default function AddItem(props) {
 //                                     <TableCell>
 //                                         <input
 //                                             type="text"
-//                                             name="namabarang"
-//                                             // value={item.namabarang}
+//                                             name="namaBarang"
+//                                             // value={item.namaBarang}
 //                                             //onChange={handleArrayBarang}
 //                                             required
 //                                         ></input>

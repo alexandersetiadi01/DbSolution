@@ -3,8 +3,10 @@ import React from "react";
 import TabelBarang from "../../Table/TabelBarang";
 import SearchBarang from "../../Table/SearchBarang";
 import { IconButton, Tooltip } from "@mui/material";
-import AddItem from "../../Dialog/AddItem";
-import AddIcon from '@mui/icons-material/Add';
+
+import { RemoveItem } from "../../Dialog/RemoveItem";
+
+import RemoveIcon from '@mui/icons-material/Remove';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -17,7 +19,6 @@ const rows = [
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
-
 
 function BarangKeluar(props) {
   const [searchValue, changeSearchValue] = React.useState("")
@@ -78,11 +79,11 @@ function BarangKeluar(props) {
                   </div>
                   <div className="add-item" style={{marginLeft: '5px'}}>
                     <IconButton onClick={openAddDialog}>
-                      <Tooltip title="Add">
-                        <AddIcon/>
+                      <Tooltip title="Remove">
+                        <RemoveIcon/>
                       </Tooltip>
                     </IconButton>
-                    <AddItem open={addItem} closeDialog={closeAddDialog} />
+                    <RemoveItem open={addItem} close={closeAddDialog} />
                   </div>
                 </div>
                 {/* /.card-header */}

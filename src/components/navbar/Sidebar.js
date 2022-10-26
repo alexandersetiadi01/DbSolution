@@ -57,19 +57,19 @@ export default function Sidebar() {
                 </a>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <Link to="/Logistik/barangMasuk" className="nav-link">
+                    <Link to="/dashboard/Logistik/barangMasuk" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       <p>Barang Masuk</p>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/Logistik/barangKeluar" className="nav-link">
+                    <Link to="/dashboard/Logistik/barangKeluar" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       <p>Barang Keluar</p>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/Logistik/Inventory" className="nav-link">
+                    <Link to="/dashboard/Logistik/Inventory" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       <p>Inventory</p>
                     </Link>
@@ -87,13 +87,13 @@ export default function Sidebar() {
                 </a>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <Link to="/RAP/detailRAP" className="nav-link">
+                    <Link to="/dashboard/RAP/detailRAP" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       <p>Detail RAP</p>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/RAP/Progress" className="nav-link">
+                    <Link to="/dashboard/RAP/Progress" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       <p>Progress</p>
                     </Link>
