@@ -26,4 +26,18 @@ export function Gagal(props) {
     );
 }
 
+export function Notif(props) {
+  return (
+      <Snackbar
+          open={props.open}
+          autoHideDuration={6000}
+          onClose={props.close}
+      >
+          <Alert severity={props.type} sx={{ width: "100%" }}>
+              {props.message}
+          </Alert>
+      </Snackbar>
+  );
+}
+
 

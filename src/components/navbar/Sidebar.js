@@ -45,6 +45,24 @@ export default function Sidebar() {
               role="menu"
               data-accordion="false"
             >
+              <li className="nav-item menu-open">
+                {/* <a href="#" className="nav-link active"> */}
+                <a href="#" className="nav-link">
+                  <i className="nav-icon fas fa-tachometer-alt" />
+                  <p>
+                    Master
+                    <i className="right fas fa-angle-left" />
+                  </p>
+                </a>
+                <ul className="nav nav-treeview">
+                  <li className="nav-item">
+                    <Link to="/dashboard/Master/MasterBarang" className="nav-link">
+                      <i className="far fa-circle nav-icon" />
+                      <p>Master Barang</p>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
               {/* <li className="nav-item menu-open"> */}
               <li className="nav-item menu-open">
                 {/* <a href="#" className="nav-link active"> */}

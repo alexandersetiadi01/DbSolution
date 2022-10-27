@@ -18,10 +18,13 @@ export default function Confirmation(props) {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Warning"}
+                    {"Confirmation"}
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
+                    {/* {props.data.map((item, index) => {
+
+                    })} */}
                     This item will be removed permanently. <br/>
                     Are You Sure want to remove this Item?
                 </DialogContentText>
