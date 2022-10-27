@@ -14,7 +14,7 @@ import {
 
 // import AddBarangMasuk from "../../Dialog/barangMasuk.js/AddBarangMasuk";
 import { Berhasil, Gagal } from "../../Dialog/notification";
-import AddItem from "../../Dialog/AddItem";
+import AddBarangMasuk from "../../Dialog/AddBarangMasuk";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -182,7 +182,7 @@ export default function BarangMasuk(props) {
                         <AddIcon />
                       </Tooltip>
                     </IconButton>
-                    <AddItem
+                    <AddBarangMasuk
                       open={addItem} 
                       close={closeAddDialog} 
                     />

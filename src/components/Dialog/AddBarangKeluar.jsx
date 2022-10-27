@@ -65,7 +65,7 @@ const satuan = [
 ]
 
 
-export const RemoveItem = (props) => {
+export default function AddBarangKeluar (props){
 
     const detail = {
         namaBarang: "",
@@ -330,14 +330,14 @@ export const RemoveItem = (props) => {
               
             </DialogContent>
             <DialogActions>
-            <Button onClick={props.close}>
+            <Button color="error" onClick={props.close}>
                 Cancel
             </Button>
             <Button 
                 onClick={openConfirmDialog}
-                color="error"
+                color="success"
             >
-                Remove
+                Save
             </Button>
             </DialogActions>
         </Dialog>

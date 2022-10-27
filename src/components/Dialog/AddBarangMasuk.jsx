@@ -63,7 +63,7 @@ const lokasi = [
   },
 ];
 
-export default function AddItem(props) {
+export default function AddBarangMasuk(props) {
   const detail = {
     namaBarang: "",
     namaPenerima: "",
@@ -375,7 +375,7 @@ export default function AddItem(props) {
             <Button color="error" onClick={props.close}>
               Cancel
             </Button>
-            <Button color="success" type="submit">Add</Button>
+            <Button color="success" type="submit">Save</Button>
           </ValidatorForm>
         </DialogContent>
         {/* <DialogActions>

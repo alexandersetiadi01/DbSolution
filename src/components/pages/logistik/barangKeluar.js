@@ -1,10 +1,11 @@
 import React from "react";
 
 import TabelBarang from "../../Table/TabelBarang";
+import AddIcon from "@mui/icons-material/Add";
 import SearchBarang from "../../Table/SearchBarang";
 import { IconButton, Tooltip } from "@mui/material";
 
-import { RemoveItem } from "../../Dialog/RemoveItem";
+import AddBarangKeluar from "../../Dialog/AddBarangKeluar";
 
 import RemoveIcon from '@mui/icons-material/Remove';
 
@@ -80,10 +81,10 @@ function BarangKeluar(props) {
                   <div className="add-item" style={{marginLeft: '5px'}}>
                     <IconButton onClick={openAddDialog}>
                       <Tooltip title="Remove">
-                        <RemoveIcon/>
+                        <AddIcon />
                       </Tooltip>
                     </IconButton>
-                    <RemoveItem open={addItem} close={closeAddDialog} />
+                    <AddBarangKeluar open={addItem} close={closeAddDialog} />
                   </div>
                 </div>
                 {/* /.card-header */}
