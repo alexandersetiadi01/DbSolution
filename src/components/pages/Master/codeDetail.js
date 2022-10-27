@@ -173,7 +173,7 @@ export default function CodeDetail(props) {
                         sx={{ margin: "dense", marginTop: 1 }}
                       >
                         <InputLabel id="deskripsi" sx={{ margin: "dense" }}>
-                          Code Master
+                          Pilih Code Master
                         </InputLabel>
                         <Select
                           margin="dense"
@@ -182,6 +182,7 @@ export default function CodeDetail(props) {
                           placeholder="Code Master"
                           defaultValue={groupBy}
                           value={groupBy}
+                          variant ="standard"
                           onChange={handleGroupBy}
                           validators={["required"]}
                           errorMessages={["required"]}
