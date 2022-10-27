@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TablePagination from "@mui/material/TablePagination";
 import { IconButton, Tooltip } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default class TabelBarang extends Component {
   constructor(props) {
@@ -101,6 +102,11 @@ export default class TabelBarang extends Component {
                           <DeleteIcon />
                         </IconButton>
                       </Tooltip>
+                      {/* <Tooltip title="View">
+                        <IconButton onClick={} color="error">
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip> */}
                     </TableCell>
                   </TableRow>
                 ))}

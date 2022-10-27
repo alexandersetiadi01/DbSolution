@@ -11,6 +11,8 @@ import RAP from './components/pages/RAP/RAP';
 import Progress from './components/pages/RAP/Progress';
 import { Proyek } from './components/pages/user/Proyek';
 import MasterBarang from './components/pages/Master/masterBarang';
+import CodeMaster from './components/pages/Master/codeMaster';
+import CodeDetail from './components/pages/Master/codeDetail';
 
 function LoginLayout (){
   return (
@@ -53,8 +55,12 @@ function App() {
 
         <Route path='/dashboard' element={<AppLayout />}>
           <Route index element={<BarangMasuk />}></Route>
+
           {/* master */}
           <Route path="Master/masterBarang" element={<MasterBarang />}></Route>
+          <Route path="Master/codeMaster" element={<CodeMaster />}></Route>
+          <Route path="Master/codeDetail" element={<CodeDetail />}></Route>
+
           {/* logistik */}
           <Route path="Logistik/barangMasuk" element={<BarangMasuk />}></Route>
           <Route path="Logistik/barangKeluar" element={<BarangKeluar />}></Route>

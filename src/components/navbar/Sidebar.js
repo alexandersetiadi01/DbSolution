@@ -61,6 +61,18 @@ export default function Sidebar() {
                       <p>Master Barang</p>
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link to="/dashboard/Master/codeMaster" className="nav-link">
+                      <i className="far fa-circle nav-icon" />
+                      <p>Code Master</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/dashboard/Master/codeDetail" className="nav-link">
+                      <i className="far fa-circle nav-icon" />
+                      <p>Code Detail</p>
+                    </Link>
+                  </li>
                 </ul>
               </li>
               {/* <li className="nav-item menu-open"> */}
