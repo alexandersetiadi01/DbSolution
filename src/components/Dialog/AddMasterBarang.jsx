@@ -35,7 +35,7 @@ import dayjs from "dayjs";
 
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
-import Confirmation from "./Confirmation";
+import {MasterConfirmation} from "./Confirmation";
 import { Berhasil, Gagal, Notif } from "./notification";
 
 const proyekAsal = [
@@ -111,165 +111,174 @@ export default function AddMasterBarang(props) {
     };
 
     const addMasterBarang = () => {
-        setAlertType("success");
-        setMessage("Berhasil");
-        setAlert(true);
-        setInputs("");
+        openConfirmDialog()
+        // setAlertType("success");
+        // setMessage("Berhasil");
+        // setAlert(true);
+        // setInputs(detail);
     };
 
     return (
         <>
         <Dialog open={props.open} onClose={props.close} maxWidth="lg">
-            <DialogTitle>Master Barang</DialogTitle>
+            <DialogTitle>
+                Master Barang
+            </DialogTitle>
             <ValidatorForm onSubmit={addMasterBarang}>
-            <DialogContent>
-                <Grid
-                container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
-                <Grid item xs={6}>
-                    <TextValidator
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    name="kodeBarang"
-                    label="Kode Barang"
-                    value={inputs.kodeBarang}
-                    onChange={handleInputChange}
-                    type="text"
-                    variant="standard"
-                    validators={["required"]}
-                    errorMessages={["required"]}
-                    autoComplete="off"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <FormControl
-                    fullWidth
-                    sx={{ margin: "dense", marginTop: 1, marginBottom: 1 }}
+                <DialogContent>
+                    <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                     >
-                    <Autocomplete
-                        autoHighlight
-                        fullWidth
-                        id="combo-box-demo"
-                        options={barang}
-                        getOptionLabel={(option) => option.namaBarang}
-                        renderOption={(props, option) => (
-                        <Box component="li" {...props}>
-                            {option.namaBarang}
-                        </Box>
-                        )}
-                        renderInput={(params) => (
-                        <TextField
-                            variant="standard"
+                        <Grid item xs={6}>
+                            <TextValidator
                             fullWidth
-                            {...params}
-                            label="Nama Barang"
-                        />
-                        )}
-                    />
-                    </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                    <TextValidator
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    name="category"
-                    label="Category"
-                    value={inputs.category}
-                    onChange={handleInputChange}
-                    type="text"
-                    variant="standard"
-                    validators={["required"]}
-                    errorMessages={["required"]}
-                    autoComplete="off"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <TextValidator
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    name="subCategory"
-                    label="Sub Category"
-                    value={inputs.subCategory}
-                    onChange={handleInputChange}
-                    type="text"
-                    variant="standard"
-                    validators={["required"]}
-                    errorMessages={["required"]}
-                    autoComplete="off"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <TextValidator
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    name="type"
-                    label="Type"
-                    value={inputs.type}
-                    onChange={handleInputChange}
-                    type="text"
-                    variant="standard"
-                    validators={["required"]}
-                    errorMessages={["required"]}
-                    autoComplete="off"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <TextValidator
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    name="merk"
-                    label="Merk"
-                    value={inputs.merk}
-                    onChange={handleInputChange}
-                    type="text"
-                    variant="standard"
-                    validators={["required"]}
-                    errorMessages={["required"]}
-                    autoComplete="off"
-                    />
-                </Grid>
-                <Grid item xs={3}>
-                    <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    options={satuan}
-                    sx={{
-                        marginTop: 1,
-                    }}
-                    renderInput={(params) => (
-                        <TextField {...params} variant="standard" label="Satuan" />
-                    )}
-                    />
-                </Grid>
-                </Grid>
-            </DialogContent>
-            <DialogActions>
-            <Button color="error" onClick={props.close}>
-                Cancel
-            </Button>
-            <Button type="submit" color="success">
-                Save
-            </Button>
-            </DialogActions>
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            name="kodeBarang"
+                            label="Kode Barang"
+                            value={inputs.kodeBarang}
+                            onChange={handleInputChange}
+                            type="text"
+                            variant="standard"
+                            validators={["required"]}
+                            errorMessages={["required"]}
+                            autoComplete="off"
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FormControl
+                            fullWidth
+                            sx={{ margin: "dense", marginTop: 1, marginBottom: 1 }}
+                            >
+                            <Autocomplete
+                                autoHighlight
+                                fullWidth
+                                id="combo-box-demo"
+                                name="namaBarang"
+                                options={barang}
+                                getOptionLabel={(option) => option.namaBarang}
+                                renderOption={(props, option) => (
+                                <Box component="li" {...props}>
+                                    {option.namaBarang}
+                                </Box>
+                                )}
+                                renderInput={(params) => (
+                                <TextField
+                                    variant="standard"
+                                    fullWidth
+                                    {...params}
+                                    label="Nama Barang"
+                                />
+                                )}
+                                onChange={
+                                    (event, value) => {
+                                        setInputs({ ...inputs, 'namaBarang': value.namaBarang })
+                                    }
+                                }
+                            />
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextValidator
+                            fullWidth
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            name="category"
+                            label="Category"
+                            value={inputs.category}
+                            onChange={handleInputChange}
+                            type="text"
+                            variant="standard"
+                            validators={["required"]}
+                            errorMessages={["required"]}
+                            autoComplete="off"
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextValidator
+                            fullWidth
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            name="subCategory"
+                            label="Sub Category"
+                            value={inputs.subCategory}
+                            onChange={handleInputChange}
+                            type="text"
+                            variant="standard"
+                            validators={["required"]}
+                            errorMessages={["required"]}
+                            autoComplete="off"
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextValidator
+                            fullWidth
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            name="type"
+                            label="Type"
+                            value={inputs.type}
+                            onChange={handleInputChange}
+                            type="text"
+                            variant="standard"
+                            validators={["required"]}
+                            errorMessages={["required"]}
+                            autoComplete="off"
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextValidator
+                            fullWidth
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            name="merk"
+                            label="Merk"
+                            value={inputs.merk}
+                            onChange={handleInputChange}
+                            type="text"
+                            variant="standard"
+                            validators={["required"]}
+                            errorMessages={["required"]}
+                            autoComplete="off"
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            options={satuan}
+                            sx={{
+                                marginTop: 1,
+                            }}
+                            renderInput={(params) => (
+                                <TextField {...params} variant="standard" label="Satuan" />
+                            )}
+                            />
+                        </Grid>
+                    </Grid>
+                </DialogContent>
+                <DialogActions>
+                    <Button color="error" onClick={props.close}>
+                        Cancel
+                    </Button>
+                    <Button type="submit" color="success">
+                        Save
+                    </Button>
+                </DialogActions>
             </ValidatorForm>
         </Dialog>
-        <Confirmation
+        <MasterConfirmation
             open={confirm}
             cancel={closeConfirmDialog}
+            // handleAdd={RemoveItem}
             data={inputs}
-            handleRemove={RemoveItem}
         />
         <Notif open={alert} close={closeAlert} type={alertType} message={message}/>
         </>

@@ -32,6 +32,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { Notif } from "./notification";
+import { InConfirmation } from "./Confirmation";
 
 const proyekAsal = [
   {
@@ -65,6 +66,14 @@ const lokasi = [
 ];
 
 export default function AddBarangMasuk(props) {
+
+  const [confirm, setConfirm] = useState(false);
+  const openConfirm = () =>{
+    setConfirm(true)
+  }
+  const closeConfirm = () =>{
+    setConfirm(false)
+  }
 
   const [message, setMessage] = useState();
   const [alertType, setAlertType] = useState();
@@ -138,11 +147,13 @@ export default function AddBarangMasuk(props) {
   };
 
   const addBarangMasuk = () => {
-    setAlertType("success");
-    setMessage("Berhasil");
-    setAlert(true);
-    setInputs(detail);
-    setArrayBarang([]);
+    openConfirm()
+    // setAlertType("success");
+    // setMessage("Berhasil");
+    // setAlert(true);
+
+    // setInputs(detail);
+    // setArrayBarang([]);
   };
 
   //   console.log(arrayBarang);
@@ -150,7 +161,7 @@ export default function AddBarangMasuk(props) {
   return (
     <>
       <Dialog open={props.open} onClose={props.close} maxWidth="lg">
-        <DialogTitle>Add Barang</DialogTitle>
+        <DialogTitle>Barang Masuk</DialogTitle>
         <DialogContent>
           <ValidatorForm onSubmit={addArrayBarang}>
             <Grid
@@ -284,7 +295,7 @@ export default function AddBarangMasuk(props) {
                 <Tooltip title="Delete Barang">
                   <Button variant="contained" color="error" onClick={resetBarang}>
                     <DeleteIcon />
-                    Barang
+                      Barang
                   </Button>
                 </Tooltip>
               </Grid>
@@ -397,6 +408,12 @@ export default function AddBarangMasuk(props) {
           <Button onClick={addBarangMasuk}>Add</Button>
         </DialogActions> */}
       </Dialog>
+      <InConfirmation 
+        open={confirm}
+        cancel={closeConfirm}
+        data={arrayBarang}
+      />
+
       <Notif open={alert} close={closeAlert} type={alertType} message={message}/>
     </>
   );
