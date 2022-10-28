@@ -31,6 +31,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { Notif } from "./notification";
 
 const proyekAsal = [
   {
@@ -67,6 +68,10 @@ export default function AddCodeMaster(props) {
   const [message, setMessage] = useState();
   const [alertType, setAlertType] = useState();
   const [alert, setAlert] = useState(false);
+
+  const closeAlert = () => {
+    setAlert(false);
+  }
 
   const detail = {
     IDCodeMaster: "",
@@ -135,6 +140,7 @@ export default function AddCodeMaster(props) {
           </DialogActions>
         </ValidatorForm>
       </Dialog>
+      <Notif open={alert} close={closeAlert} type={alertType} message={message}/>
     </>
   );
 }

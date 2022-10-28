@@ -31,6 +31,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { Notif } from "./notification";
 
 const proyekAsal = [
   {
@@ -64,6 +65,15 @@ const lokasi = [
 ];
 
 export default function AddBarangMasuk(props) {
+
+  const [message, setMessage] = useState();
+  const [alertType, setAlertType] = useState();
+  const [alert, setAlert] = useState(false);
+
+  const closeAlert = () => {
+    setAlert(false);
+  }
+
   const detail = {
     namaBarang: "",
     namaPenerima: "",
@@ -128,8 +138,10 @@ export default function AddBarangMasuk(props) {
   };
 
   const addBarangMasuk = () => {
-    window.alert("berhasil");
-    setInputs("");
+    setAlertType("success");
+    setMessage("Berhasil");
+    setAlert(true);
+    setInputs(detail);
     setArrayBarang([]);
   };
 
@@ -309,9 +321,9 @@ export default function AddBarangMasuk(props) {
                             variant="standard"
                             type="text"
                             //   InputProps={{ inputProps: { maxLength: 6 } }}
-                            defaultValue={inputs.namaBarang}
-                            value={inputs.namaBarang}
-                            onChange={handleInputChange}
+                            defaultValue={item.namaBarang}
+                            value={item.namaBarang}
+                            onChange={e => handleArrayBarang(index, e)}
                             validators={["required"]}
                             errorMessages={["required"]}
                           >
@@ -330,7 +342,7 @@ export default function AddBarangMasuk(props) {
                           variant="standard"
                           name="quantity"
                           value={item.quantity}
-                          onChange={handleArrayBarang}
+                          onChange={e => handleArrayBarang(index, e)}
                           validators={["required"]}
                           errorMessages={["required"]}
                         />
@@ -343,7 +355,7 @@ export default function AddBarangMasuk(props) {
                           variant="standard"
                           name="satuan"
                           value={item.satuan}
-                          onChange={handleArrayBarang}
+                          onChange={e => handleArrayBarang(index, e)}
                           validators={["required"]}
                           errorMessages={["required"]}
                         />
@@ -355,7 +367,7 @@ export default function AddBarangMasuk(props) {
                           variant="standard"
                           name="keterangan"
                           value={item.keterangan}
-                          onChange={handleArrayBarang}
+                          onChange={e => handleArrayBarang(index, e)}
                           validators={["required"]}
                           errorMessages={["required"]}
                         />
@@ -385,6 +397,7 @@ export default function AddBarangMasuk(props) {
           <Button onClick={addBarangMasuk}>Add</Button>
         </DialogActions> */}
       </Dialog>
+      <Notif open={alert} close={closeAlert} type={alertType} message={message}/>
     </>
   );
 }

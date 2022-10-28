@@ -39,6 +39,7 @@ import dayjs from 'dayjs'
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 import Confirmation from './Confirmation';
+import { Notif } from './notification';
 
 const proyekAsal = [
     {
@@ -67,22 +68,25 @@ const satuan = [
 
 export default function AddBarangKeluar (props){
 
+    const [message, setMessage] = useState();
+    const [alertType, setAlertType] = useState();
+    const [alert, setAlert] = useState(false);
+    const closeAlert = () => {
+        setAlert(false);
+    }
+
     const detail = {
-        namaBarang: "",
-        namaPenerima: "",
-        quantity: "",
-        // noSuratJalan1: "",
-        noSuratJalan: "",
-        proyekAsal: "",
-        // noSuratJalan2: "",
-        tgl: "",
-        lokasi: "",
-        action: "",
-        username: "",
-        proyek: "",
-        keterangan: "",
-        satuan: "",
-        supplier: "",
+        namabarang: "",
+        kodeKeluar: "", 
+        namaPengambil: "",
+        quantity: 0,
+        progress: "",  
+        tgl: '',
+        proyek: '',
+        username: '',
+        keterangan: '',
+        tujuan: '',
+        satuan: ''
       };
 
       const [inputs, setInputs] = useState(detail);
@@ -128,8 +132,12 @@ export default function AddBarangKeluar (props){
         openConfirm(false)
     }
 
-    const RemoveItem = () =>{
-
+    const add = () =>{
+        setAlert(true);
+        setMessage("berhasil");
+        setInputs("");
+        setArrayBarang([]);
+        setInputs(detail);
     }
 
     const [tanggal, setTanggal] = React.useState(dayjs(Date.now()));
@@ -144,8 +152,8 @@ export default function AddBarangKeluar (props){
             <DialogTitle>
                 Barang Keluar
             </DialogTitle>
+            <ValidatorForm onSubmit={add}>
             <DialogContent>
-                <ValidatorForm>
                     <Grid
                         container
                         rowSpacing={1}
@@ -184,7 +192,7 @@ export default function AddBarangKeluar (props){
                                 id="name"
                                 name="namaPengambil"
                                 label="Nama Pengambil"
-                                value={inputs.namaPenerima}
+                                value={inputs.namaPengambil}
                                 onChange={handleInputChange}
                                 type="text"
                                 variant="standard"
@@ -297,11 +305,11 @@ export default function AddBarangKeluar (props){
                                 <TextValidator
                                     fullWidth
                                     margin="dense"
-                                    id="namaProyek"
-                                    label="Nama Proyek"
-                                    name="Nama Proyek"
-                                    // value={inputs.noSuratJalan}
-                                    // onChange={handleInputChange}
+                                    id="tujuan"
+                                    label="Proyek Tujuan "
+                                    name="tujuan"
+                                    value={inputs.tujuan}
+                                    onChange={handleInputChange}
                                     type="text"
                                     variant="standard"
                                     validators={["required"]}
@@ -326,22 +334,23 @@ export default function AddBarangKeluar (props){
                             maxRows={6}
                         />
                     </Grid>
-                </ValidatorForm>
-              
             </DialogContent>
             <DialogActions>
             <Button color="error" onClick={props.close}>
                 Cancel
             </Button>
             <Button 
-                onClick={openConfirmDialog}
+                // onClick={openConfirmDialog}
+                type="submit"
                 color="success"
             >
                 Save
             </Button>
             </DialogActions>
+            </ValidatorForm>
         </Dialog>
-        <Confirmation open={confirm} cancel={closeConfirmDialog} handleRemove={RemoveItem} />
+        {/* <Confirmation open={confirm} cancel={closeConfirmDialog} handleRemove={RemoveItem} /> */}
+        <Notif open={alert} close={closeAlert} type={alertType} message={message}/>
     </>
   )
 }
