@@ -38,7 +38,7 @@ import dayjs from 'dayjs'
 
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
-import Confirmation from './Confirmation';
+import { OutConfirmation } from './Confirmation';
 import { Notif } from './notification';
 
 const proyekAsal = [
@@ -61,7 +61,7 @@ const barang = [
     },
 ];
 
-const satuan = [
+const satuanList = [
     "Kg", "liter"
 ]
 
@@ -76,12 +76,12 @@ export default function AddBarangKeluar (props){
     }
 
     const detail = {
-        namabarang: "",
+        namaBarang: "",
         kodeKeluar: "", 
         namaPengambil: "",
-        quantity: 0,
+        quantity: 1,
         progress: "",  
-        tgl: '',
+        tgl: dayjs(Date.now()).format('DD/MM/YYYY'),
         proyek: '',
         username: '',
         keterangan: '',
@@ -95,31 +95,36 @@ export default function AddBarangKeluar (props){
         // console.log(inputs)
       };
     
-      const [arrayBarang, setArrayBarang] = useState([]);
-      let addArrayBarang = () => {
-        setArrayBarang([
-          ...arrayBarang,
-          {
-            namaBarang: "",
-            quantity: "",
-            satuan: "",
-            noSuratJalan: inputs.noSuratJalan,
-            proyekAsal: inputs.proyekAsal,
-            namaPenerima: inputs.namaPenerima,
-            tgl: inputs.tgl,
-            lokasi: inputs.lokasi,
-            status: "",
-            username: inputs.username,
-            keterangan: "",
-            proyek: inputs.proyek,
-            supplier: inputs.supplier,
-          },
-        ]);
-    };
+    //   const [arrayBarang, setArrayBarang] = useState([]);
+    //   let addArrayBarang = () => {
+    //     setArrayBarang([
+    //       ...arrayBarang,
+    //       {
+    //         namaBarang: "",
+    //         quantity: "",
+    //         satuan: "",
+    //         noSuratJalan: inputs.noSuratJalan,
+    //         proyekAsal: inputs.proyekAsal,
+    //         namaPenerima: inputs.namaPenerima,
+    //         tgl: inputs.tgl,
+    //         lokasi: inputs.lokasi,
+    //         status: "",
+    //         username: inputs.username,
+    //         keterangan: "",
+    //         proyek: inputs.proyek,
+    //         supplier: inputs.supplier,
+    //       },
+    //     ]);
+    // };
 
     const [pindahProyek, setPindahProyek] = useState(true);
     const handlePindahProyek = () => {
-    setPindahProyek(!pindahProyek);
+        // Clear the tujuan input
+        if (pindahProyek === true){
+            setInputs({ ...inputs, 'tujuan' : '' })
+        }
+
+        setPindahProyek(!pindahProyek);
     };
 
 
@@ -133,18 +138,32 @@ export default function AddBarangKeluar (props){
     }
 
     const add = () =>{
-        setAlert(true);
-        setMessage("berhasil");
-        setInputs("");
-        setArrayBarang([]);
-        setInputs(detail);
+        // console.log(inputs)
+        openConfirmDialog()
+        // setAlert(true);
+        // setMessage("berhasil");
+        // setInputs("");
+        // setArrayBarang([]);
+        // setInputs(detail);
     }
 
     const [tanggal, setTanggal] = React.useState(dayjs(Date.now()));
 
     const handleTanggal = (newValue) => {
-        setTanggal(newValue);
+        setTanggal(newValue)
+        setInputs({ ...inputs, 'tgl' : newValue.format('DD/M/YYYY') });
     };
+
+    const [namaBarang, setNamaBarang] = React.useState(null);
+    const handleNamaBarang = (event, newValue) => {
+        setNamaBarang(newValue)
+        setInputs({ ...inputs, 'namaBarang' : newValue.namaBarang })
+    }
+
+    const [satuan, setSatuan] = React.useState();
+    const handleSatuan = (event, newValue) =>{
+        setInputs({...inputs, 'satuan' : newValue})
+    }
 
   return (
     <>
@@ -210,10 +229,13 @@ export default function AddBarangKeluar (props){
                         <Grid item xs={6}>
                             <FormControl fullWidth sx={{ margin: "dense", marginTop: 1, marginBottom: 1 }}>
                                 <Autocomplete 
-                                    autoHighlight
+                                    name='namaBarang'
+                                    value={namaBarang}
+                                    onChange={handleNamaBarang}
+                                    // autoHighlight
                                     fullWidth
-                                    
                                     id="combo-box-demo"
+                                    // isOptionEqualToValue={(option, value) => option.id === value.id}
                                     options={barang}
                                     getOptionLabel = {
                                         (option) => option.namaBarang
@@ -230,24 +252,30 @@ export default function AddBarangKeluar (props){
                                     }
                                     renderInput={params => 
                                     <TextField 
+                                        {...params} 
                                         variant='standard'
                                         fullWidth
-                                        {...params} 
-                                        label="Nama Barang" />}
+                                        label="Nama Barang" 
+                                    
+                                    />}
                                 />
                             </FormControl>
                         </Grid>
                         <Grid item xs={3}>
                             <TextField
+                                name='quantity'
                                 sx={{
                                     marginTop: 1
                                 }}
+                                value={inputs.quantity}
+                                onChange={handleInputChange}
                                 type="number"
                                 variant='standard'
                                 label='Quantity'
                                 InputProps={{
                                     inputProps: {
-                                        min: 0
+                                        min: 1
+                                        // max : Number of Item in the Inventory
                                     }
                                 }}
                             />
@@ -256,17 +284,32 @@ export default function AddBarangKeluar (props){
                             item
                             xs={3}
                         >
-                              <Autocomplete
-                                disablePortal
+                            <Autocomplete
+                                // disablePortal
+                                value={satuan}
+                                onChange={handleSatuan}
                                 id="combo-box-demo"
-                                options={satuan}
+                                options={satuanList}
                                 sx={{ 
                                     marginTop: 1
                                 }}
+                                getOptionLabel = {
+                                    (option) => option
+                                }
+                                renderOption={
+                                    (props, option) =>(
+                                        <Box 
+                                        component='li'
+                                        {...props}
+                                        >
+                                            {option}
+                                        </Box>
+                                    )
+                                }
                                 renderInput={(params) => 
                                 <TextField {...params} 
-                                variant='standard'
-                                label="Satuan" 
+                                    variant='standard'
+                                    label="Satuan" 
                                 />}
                             />   
                         </Grid>
@@ -328,29 +371,39 @@ export default function AddBarangKeluar (props){
                     >
                         <TextField
                             fullWidth
+                            id='keterangan'
+                            name='keterangan'
                             placeholder="Keterangan"
+                            value={inputs.keterangan}
+                            onChange={handleInputChange}
                             multiline
-                            rows={4}
+                            minRows={4}
                             maxRows={6}
                         />
                     </Grid>
             </DialogContent>
             <DialogActions>
-            <Button color="error" onClick={props.close}>
-                Cancel
-            </Button>
-            <Button 
-                // onClick={openConfirmDialog}
-                type="submit"
-                color="success"
-            >
-                Save
-            </Button>
+                <Button color="error" onClick={props.close}>
+                    Cancel
+                </Button>
+                <Button 
+                    // onClick={openConfirmDialog}
+                    type="submit"
+                    color="success"
+                >
+                    Save
+                </Button>
             </DialogActions>
             </ValidatorForm>
         </Dialog>
+        <OutConfirmation 
+            open={confirm}
+            cancel={closeConfirmDialog}
+            data={inputs}
+        />
+
         {/* <Confirmation open={confirm} cancel={closeConfirmDialog} handleRemove={RemoveItem} /> */}
-        <Notif open={alert} close={closeAlert} type={alertType} message={message}/>
+        {/* <Notif open={alert} close={closeAlert} type={alertType} message={message}/> */}
     </>
   )
 }

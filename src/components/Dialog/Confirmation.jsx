@@ -14,6 +14,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Typography  from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 function OutConfirmation(props) {
 
@@ -29,13 +31,86 @@ function OutConfirmation(props) {
                     Konfirmasi
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {/* {props.data.map((item, index) => {
+                <DialogContentText id="alert-dialog-description">
+                    <Grid 
+                        container 
+                        spacing={2}
+                        sx= {{width: 500}}
+                    >
+                        <Grid item>
+                            <Typography>
+                                Tanggal : 
+                            </Typography>
+                            <Typography>
+                                Nama Pengambil : 
+                            </Typography>
+                            <Typography>
+                                Nama Barang : 
+                            </Typography>  
+                            <Typography>
+                                Quantity : 
+                            </Typography>  
+                            <Typography>
+                                Satuan : 
+                            </Typography>  
+                            
+                            {props.data.tujuan === '' ? 
+                                <></>
+                                :
+                                <Typography>
+                                    Tujuan : 
+                                </Typography>
+                            }
+                            <Typography>
+                                Keterangan 
+                            </Typography>
+                        </Grid>
 
-                        })} */}
-                        This item will be removed permanently. <br/>
-                        Are You Sure want to remove this Item?
-                    </DialogContentText>
+                        <Grid item xs container direction="column" spacing={2}>
+                            <Grid
+                                item
+                            >
+                              <Typography>
+                                {props.data.tgl}
+                              </Typography>
+                              <Typography>
+                                {props.data.namaPengambil}
+                              </Typography>
+                              <Typography>
+                                {props.data.namaBarang}
+                              </Typography>
+                              <Typography>
+                                {props.data.quantity}
+                              </Typography>
+                              <Typography>
+                                {props.data.satuan}
+                              </Typography>
+                              
+                                {props.data.tujuan === '' ? 
+                                    <></>
+                                    :
+                                    <Typography>
+                                        {props.data.tujuan} 
+                                    </Typography>
+                                }
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    
+                        
+                    <TextField 
+                        value={props.data.keterangan}
+                        disabled
+                        sx={{
+                            marginTop: 1
+                        }}
+                        multiline
+                        fullWidth
+                        minRows={2}
+                        maxRows={4}
+                    />
+
+                </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.cancel} autoFocus>Cancel</Button>
@@ -49,7 +124,7 @@ function OutConfirmation(props) {
 }
 
 function InConfirmation(props){
-
+    // console.log(props.data)
     return(
         <div>
             <Dialog
@@ -63,60 +138,103 @@ function InConfirmation(props){
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                   <Grid
-                    container
-                    sx= {{width: 500}}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                   >
-                        <Grid
-                            container
-                            item
-                            spacing={2}
-                        >
-                            <Grid item xs={4}>
-                                Tanggal :
-                            </Grid>
-                            <Grid item xs={6}>
-                                {props.data.tanggal}
+                    <Grid 
+                        container 
+                        spacing={2}
+                        sx= {{width: 500}}
+                    >
+                        <Grid item>
+                            <Typography>
+                                Tanggal : 
+                            </Typography>
+                            {
+                                props.data.noSuratJalan !== '' ? 
+                                <Typography>
+                                    Nomor Surat jalan : 
+                                </Typography>
+                                : 
+                                <Typography>
+                                    Proyek Asal : 
+                                </Typography>
+                            } 
+                            <Typography>
+                                Nama Penerima : 
+                            </Typography>
+                            <Typography>
+                                Lokasi : 
+                            </Typography>  
+                        </Grid>
+
+                        <Grid item xs container direction="column" spacing={2}>
+                            <Grid
+                                item
+                            >
+                                <Typography>
+                                    {props.data.tgl} 
+                                </Typography>
+                                {
+                                props.data.noSuratJalan !== '' ? 
+                                    <Typography>
+                                        {props.data.noSuratJalan} 
+                                    </Typography>
+                                : 
+                                    <Typography>
+                                        {props.data.proyekAsal}
+                                    </Typography>
+                                } 
+                                <Typography>
+                                    {props.data.namaPenerima}
+                                </Typography>
+                                <Typography>
+                                    {props.data.lokasi}
+                                </Typography>   
                             </Grid>
                         </Grid>
-                        <Grid
-                            container
-                            item
-                            spacing={2}
-                        >
-                            <Grid item xs={5}>
-                                Nomor Surat Jalan :
-                            </Grid>
-                            <Grid item xs={7}>
-                                {props.data.noSuratJalan}
-                            </Grid>
-                        </Grid>
-                        <Grid
-                            container
-                            item
-                            spacing={2}
-                        >
-                            <Grid item xs={4}>
-                                Nama Penerima:
-                            </Grid>
-                            <Grid item xs={7}>
-                                {props.data.namaPenerima}
-                            </Grid>
-                        </Grid>
-                        <Grid
-                            container
-                            item
-                            spacing={2}
-                        >
-                            <Grid item xs={3}>
-                                Lokasi:
-                            </Grid>
-                            <Grid item xs={6}>
-                                {props.data.lokasi}
-                            </Grid>
-                        </Grid>
-                   </Grid>
+                        <TableContainer
+                                component={Paper}
+                                sx={{
+                                    marginTop:2, 
+                                    marginLeft:2
+                                }}
+                            >
+                                <Table
+                                    sx={{ minWidth: 450 }} 
+                                    size="small" 
+                                    aria-label="a dense table"
+                                >
+                                     <TableHead>
+                                        <TableRow>
+                                            <TableCell>Nama Barang</TableCell>
+                                            <TableCell>Quantity</TableCell>
+                                            <TableCell>Satuan</TableCell>
+                                            <TableCell>Keterangan</TableCell>
+                                            
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            props.data.barang.map((key, index) =>(
+                                                <TableRow>
+                                                    <TableCell>
+                                                        {key.namaBarang}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {key.quantity}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {key.satuan}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {key.keterangan}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                    </Grid>
+                    
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>

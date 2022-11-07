@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
+import dayjs from "dayjs";
 
 import {
   Paper,
@@ -84,9 +85,9 @@ export default function AddBarangMasuk(props) {
   }
 
   const detail = {
-    namaBarang: "",
+    // namaBarang: "",
     namaPenerima: "",
-    quantity: "",
+    // quantity: "",
     // noSuratJalan1: "",
     noSuratJalan: "",
     proyekAsal: "",
@@ -96,10 +97,17 @@ export default function AddBarangMasuk(props) {
     action: "",
     username: "",
     proyek: "",
-    keterangan: "",
-    satuan: "",
+    // keterangan: "",
+    // satuan: "",
     supplier: "",
+    barang: []
   };
+  
+  const getDate = () =>{
+    var today = dayjs().format('DD/MM/YYYY')
+    return today
+  }
+
   const [inputs, setInputs] = useState(detail);
   const handleInputChange = (event) => {
     setInputs({ ...inputs, [event.target.name]: event.target.value });
@@ -132,11 +140,13 @@ export default function AddBarangMasuk(props) {
     let newArrayBarang = [...arrayBarang];
     newArrayBarang[i][e.target.name] = e.target.value;
     setArrayBarang(newArrayBarang);
+    setInputs({ ...inputs, 'barang' : newArrayBarang });
   };
 
   let resetBarang = () => {
     setArrayBarang([]);
   };
+
   let deleteArrayBarang = (i, e) => {
     // arrayBarang.pop(i);
   };
@@ -147,6 +157,7 @@ export default function AddBarangMasuk(props) {
   };
 
   const addBarangMasuk = () => {
+    setInputs({ ...inputs, 'tgl': getDate()});
     openConfirm()
     // setAlertType("success");
     // setMessage("Berhasil");
@@ -156,13 +167,15 @@ export default function AddBarangMasuk(props) {
     // setArrayBarang([]);
   };
 
-  //   console.log(arrayBarang);
+    // console.log(inputs);
 
   return (
     <>
       <Dialog open={props.open} onClose={props.close} maxWidth="lg">
         <DialogTitle>Barang Masuk</DialogTitle>
-        <DialogContent>
+        <DialogContent
+          sx={{paddingBottom : 0}}
+        >
           <ValidatorForm onSubmit={addArrayBarang}>
             <Grid
               container
@@ -209,7 +222,7 @@ export default function AddBarangMasuk(props) {
                     //   InputProps={{ inputProps: { maxLength: 6 } }}
                   >
                     {lokasi.map((item, index) => (
-                      <MenuItem key={index} value={item.kodeLokasi}>
+                      <MenuItem key={item.kodeLokasi} value={item.namaLokasi}>
                         {item.namaLokasi}
                       </MenuItem>
                     ))}
@@ -316,7 +329,9 @@ export default function AddBarangMasuk(props) {
                 <TableBody>
                   {arrayBarang.map((item, index) => (
                     <TableRow key={index}>
-                      <TableCell>
+                      <TableCell
+                        sx={{width:'25vw'}}
+                      >
                         <FormControl
                           fullWidth
                           sx={{ margin: "dense", marginTop: 1 }}
@@ -339,19 +354,28 @@ export default function AddBarangMasuk(props) {
                             errorMessages={["required"]}
                           >
                             {barang.map((item, index) => (
-                              <MenuItem key={index} value={item.kodeBarang}>
+                              <MenuItem key={item.kodeBarang} value={item.namaBarang}>
                                 {item.namaBarang}
                               </MenuItem>
                             ))}
                           </Select>
                         </FormControl>
                       </TableCell>
-                      <TableCell>
+                      <TableCell
+                        sx={{width:'15vw'}}
+                      >
                         <TextValidator
                           type="number"
                           margin="dense"
                           variant="standard"
                           name="quantity"
+                          inputProps={{
+                            style:{
+                              textAlign:'right',
+                              // marginRight: '10px'
+                            },
+                            min:0
+                          }}
                           value={item.quantity}
                           onChange={e => handleArrayBarang(index, e)}
                           validators={["required"]}
@@ -359,7 +383,9 @@ export default function AddBarangMasuk(props) {
                         />
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell
+                        sx={{width:'20vw'}}
+                      >
                         <TextValidator
                           type="text"
                           margin="dense"
@@ -371,8 +397,12 @@ export default function AddBarangMasuk(props) {
                           errorMessages={["required"]}
                         />
                       </TableCell>
-                      <TableCell>
+
+                      <TableCell
+                        sx={{width:'25vw'}}
+                      >
                         <TextValidator
+                          fullWidth
                           type="text"
                           margin="dense"
                           variant="standard"
@@ -395,10 +425,17 @@ export default function AddBarangMasuk(props) {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Button color="error" onClick={props.close}>
-              Cancel
-            </Button>
-            <Button color="success" type="submit">Save</Button>
+            <DialogActions
+              sx={{
+                marginBottom:0,
+                marginTop: 2
+              }}
+            >
+              <Button color="error" onClick={props.close}>
+                Cancel
+              </Button>
+              <Button color="success" type="submit">Save</Button>
+            </DialogActions>
           </ValidatorForm>
         </DialogContent>
         {/* <DialogActions>
@@ -411,10 +448,10 @@ export default function AddBarangMasuk(props) {
       <InConfirmation 
         open={confirm}
         cancel={closeConfirm}
-        data={arrayBarang}
+        data={inputs}
       />
 
-      <Notif open={alert} close={closeAlert} type={alertType} message={message}/>
+      {/* <Notif open={alert} close={closeAlert} type={alertType} message={message}/> */}
     </>
   );
 }
