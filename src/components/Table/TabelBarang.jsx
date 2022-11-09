@@ -41,6 +41,7 @@ export default class TabelBarang extends Component {
       });
     };
 
+
     const emptyRows =
       this.state.page > 0
         ? Math.max(
@@ -48,30 +49,21 @@ export default class TabelBarang extends Component {
             (1 + this.state.page) * this.state.rowPage - this.props.data.length
           )
         : 0;
-
+    
     return (
       <div>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell style={tableHeadStyle}>Rendering Engine</TableCell>
-                <TableCell style={tableHeadStyle} align="right">
-                  Browser
-                </TableCell>
-                <TableCell style={tableHeadStyle} align="right">
-                  Platform(s)
-                </TableCell>
-                <TableCell style={tableHeadStyle} align="right">
-                  Engine Version
-                </TableCell>
-                <TableCell style={tableHeadStyle} align="right">
-                  CSS grade
-                </TableCell>
-                <TableCell style={tableHeadStyle} align="right">
-                  Actions
-                </TableCell>
-              </TableRow>
+                {
+                  this.props.meta.map((row)=>(
+                        <TableCell style={tableHeadStyle} align='center'>
+                          {row}
+                        </TableCell>
+                    ))
+                  }
+                </TableRow>
             </TableHead>
             <TableBody>
               {this.props.data
@@ -84,13 +76,9 @@ export default class TabelBarang extends Component {
                     key={row.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="center">{row.calories}</TableCell>
-                    <TableCell align="center">{row.fat}</TableCell>
-                    <TableCell align="center">{row.carbs}</TableCell>
-                    <TableCell align="center">{row.protein}</TableCell>
+                    {Object.keys(row).filter(word => !['kodePO', 'createdAt', 'updatedAt'].includes(word)).map((head)=>(
+                      <TableCell align="center">{row[head]}</TableCell>
+                    ))}
                     <TableCell align="right">
                       <Tooltip title="Edit">
                         <IconButton onClick={() => window.alert("edit " + row.name) }color="primary">

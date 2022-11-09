@@ -1,0 +1,58 @@
+[
+  {
+    "namabarang": "Abu batu",
+    "kodeKeluar": 15,
+    "quantity": 15,
+    "namaPengambil": "alex",
+    "tgl": "2022-04-14",
+    "status": "keluar",
+    "satuan": "m3",
+    "proyek": "KANTOR KELURAHAN CILENGGANG",
+    "keterangan": "test",
+    "tujuan": "",
+    "createdAt": "2022-04-13 17:46:05",
+    "updatedAt": "2022-04-13 17:46:05"
+  },
+  {
+    "namabarang": "Wiremesh M8",
+    "kodeKeluar": 16,
+    "quantity": 150,
+    "namaPengambil": "tester",
+    "tgl": "2022-04-14",
+    "status": "keluar",
+    "satuan": "lbr",
+    "proyek": "KANTOR KELURAHAN CILENGGANG",
+    "keterangan": "",
+    "tujuan": "",
+    "createdAt": "2022-04-13 18:50:38",
+    "updatedAt": "2022-04-13 18:50:38"
+  },
+  {
+    "namabarang": "Wiremesh M6",
+    "kodeKeluar": 17,
+    "quantity": 5,
+    "namaPengambil": "alex",
+    "tgl": "2022-05-10",
+    "status": "keluar",
+    "satuan": "m3",
+    "proyek": "GATE CLUSTER",
+    "keterangan": "",
+    "tujuan": "",
+    "createdAt": "2022-05-10 16:54:28",
+    "updatedAt": "2022-05-10 16:54:28"
+  },
+  {
+    "namabarang": "Wiremesh M8",
+    "kodeKeluar": 20,
+    "quantity": 25,
+    "namaPengambil": "alex",
+    "tgl": "2022-05-11",
+    "status": "keluar",
+    "satuan": "m3",
+    "proyek": "GUDANG LENGKONG",
+    "keterangan": "test",
+    "tujuan": "",
+    "createdAt": "2022-05-11 05:49:54",
+    "updatedAt": "2022-05-11 05:49:54"
+  }
+]

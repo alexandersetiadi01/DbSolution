@@ -6,20 +6,16 @@ import SearchBarang from "../../Table/SearchBarang";
 import { IconButton, Tooltip } from "@mui/material";
 
 import AddBarangKeluar from "../../Dialog/AddBarangKeluar";
-
 import RemoveIcon from '@mui/icons-material/Remove';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+import data from '../../../assets/data/barangkeluar.json'
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+
+const meta = [
+  "Nama Barang", "Kode Keluar", "Quantity", "Nama Pengambil", "Tanggal", "Status", "Satuan", "Proyek", "Keterangan", "Tujuan", "Action"
+]
+
+const rows = data;
 
 function BarangKeluar(props) {
   const [searchValue, changeSearchValue] = React.useState("")
@@ -89,7 +85,10 @@ function BarangKeluar(props) {
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">
-                  <TabelBarang data={rows} />
+                  <TabelBarang 
+                    meta={meta}
+                    data={rows} 
+                  />
                 </div>
                 {/* /.card-body */}
               </div>

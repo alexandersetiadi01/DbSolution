@@ -5,6 +5,8 @@ import SearchBarang from "../../Table/SearchBarang";
 
 import AddIcon from "@mui/icons-material/Add";
 
+import data from '../../../assets/data/barangmasuk.json'
+
 import {
   Button,
   Paper,
@@ -16,18 +18,11 @@ import {
 import { Berhasil, Gagal } from "../../Dialog/notification";
 import AddBarangMasuk from "../../Dialog/AddBarangMasuk";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+const meta = [
+  "Kode Barang", "Nama Barang", "Nama Penerima", "Quantity", "No Surat Jalan", "Status", "Lokasi", "Satuan", "Proyek", "Keterangan", "Tanggal", "Action"
+]
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-];
+const rows = data;
 
 export default function BarangMasuk(props) {
   const [message, setMessage] = useState("");
@@ -191,6 +186,7 @@ export default function BarangMasuk(props) {
                 {/* /.card-header */}
                 <div className="card-body">
                   <TabelBarang
+                    meta={meta}
                     data={searchValue === "" ? rows : filterSearch(searchValue)}
                   />
                 </div>

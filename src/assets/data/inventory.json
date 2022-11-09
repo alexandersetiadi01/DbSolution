@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "namabarang": "Ambang Atas Pintu Lipat 10 cm x 6 m Hitam ALKO",
+    "quantity": 10,
+    "satuan": "pcs",
+    "proyek": "GUDANG LENGKONG"
+  },
+  {
+    "id": 2,
+    "namabarang": "Map File",
+    "quantity": 2,
+    "satuan": "dus",
+    "proyek": "GUDANG LENGKONG"
+  },
+  {
+    "id": 3,
+    "namabarang": "Abu batu",
+    "quantity": 50,
+    "satuan": "m3",
+    "proyek": "GUDANG LENGKONG"
+  },
+  {
+    "id": 4,
+    "namabarang": "Wiremesh M8",
+    "quantity": 20,
+    "satuan": "m3",
+    "proyek": "GUDANG LENGKONG"
+  },
+  {
+    "id": 5,
+    "namabarang": "Wiremesh M8",
+    "quantity": 50,
+    "satuan": "m3",
+    "proyek": "SERPONG LAGOON A16"
+  },
+  {
+    "id": 6,
+    "namabarang": "Ambang Atas Pintu Lipat 10 cm x 6 m Coklat ALKO",
+    "quantity": 44,
+    "satuan": "pcs",
+    "proyek": "GUDANG SERPONG"
+  }
+]
