@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import TabelBarang from "../../Table/TabelBarang";
 import SearchBarang from "../../Table/SearchBarang";
@@ -17,9 +17,10 @@ import {
 // import AddBarangMasuk from "../../Dialog/barangMasuk.js/AddBarangMasuk";
 import { Berhasil, Gagal } from "../../Dialog/notification";
 import AddBarangMasuk from "../../Dialog/AddBarangMasuk";
+import { getAllBarangMasuk } from "../../API/repository";
 
 const meta = [
-  "Kode Barang", "Nama Barang", "Nama Penerima", "Quantity", "No Surat Jalan", "Status", "Lokasi", "Satuan", "Proyek", "Keterangan", "Tanggal", "Action"
+  "Kode Masuk", "Nama Barang", "Nama Penerima", "Quantity", "No Surat Jalan", "Status", "Lokasi", "Satuan", "Proyek", "Keterangan", "Tanggal", "Action"
 ]
 
 const rows = data;
@@ -124,10 +125,36 @@ export default function BarangMasuk(props) {
     setAddItem(false);
   };
 
-  const addBarang = () => {
-    setBerhasil(true);
-    setMessage("berhasil menambahkan barang");
-  };
+  //data barang masuk dari DB
+  // const [rows, setRows] = useState([]);
+
+  // useEffect(() => {
+  //     async function getBarangMasukAPI(){
+  //         const data = await getAllBarangMasuk();
+  //         let rowsData = []
+  //         for (const barang of data){
+  //             const newBarang = {
+  //                 //kodebarang: barang.kodebarang,
+  //                 namabarang: barang.namabarang,
+  //                 kodemasuk: barang.kodemasuk, 
+  //                 noSuratJalan: barang.noSuratJalan,
+  //                 namaPenerima: barang.namaPenerima,
+  //                 quantity: barang.quantity, 
+  //                 satuan: barang.satuan,  
+  //                 tgl: barang.tgl,
+  //                 lokasi: barang.lokasi,
+  //                 proyek: barang.proyek,
+  //                 keterangan: barang.keterangan
+  //             }
+  //             if(newBarang.proyek === proyek){
+  //                 rowsData.push(newBarang);
+  //             }
+              
+  //         }
+  //         setRows(rowsData);
+  //     }
+  //     getBarangMasukAPI();
+  // }, [])
 
   return (
     <div className="content-wrapper">
@@ -200,10 +227,6 @@ export default function BarangMasuk(props) {
         </div>
         {/* /.container-fluid */}
       </section>
-
-      {/* notification utk success/error */}
-      <Berhasil open={berhasil} close={closeSuccess} message={message} />
-      <Gagal open={gagal} close={closeError} message={message} />
     </div>
   );
 }

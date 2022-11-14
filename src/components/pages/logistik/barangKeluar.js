@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import TabelBarang from "../../Table/TabelBarang";
 import AddIcon from "@mui/icons-material/Add";
@@ -9,23 +9,17 @@ import AddBarangKeluar from "../../Dialog/AddBarangKeluar";
 import RemoveIcon from '@mui/icons-material/Remove';
 
 import data from '../../../assets/data/barangkeluar.json'
+import { getAllBarangKeluar } from "../../API/repository";
 
 
 const meta = [
-  "Nama Barang", "Kode Keluar", "Quantity", "Nama Pengambil", "Tanggal", "Status", "Satuan", "Proyek", "Keterangan", "Tujuan", "Action"
+  "Kode Keluar", "Nama Barang", "Quantity", "Nama Pengambil", "Tanggal", "Status", "Satuan", "Proyek", "Keterangan", "Tujuan", "Action"
 ]
 
 const rows = data;
 
 function BarangKeluar(props) {
-  const [searchValue, changeSearchValue] = React.useState("")
-
-  const changeValue = (event) =>{
-    changeSearchValue(event.target.value);
-    // console.log('Div lost focus');
-    
-  }
-
+ 
   const [addItem, setAddItem] = React.useState(false);
 
   const openAddDialog = () =>{
@@ -35,6 +29,51 @@ function BarangKeluar(props) {
   const closeAddDialog = () =>{
     setAddItem(false)
   }
+
+   /* Search */
+   const [searchValue, changeSearchValue] = useState("");
+
+   const changeValue = (event) => {
+     changeSearchValue(event.target.value);
+     // console.log('Div lost focus');
+   };
+ 
+   const filterSearch = (searchKey) => {
+     const filteredRows = rows.filter((row) =>
+       row.name.toLowerCase().includes(searchKey.toLowerCase())
+     );
+     return filteredRows;
+   };
+
+//    const [rows, setRows] = useState();
+// data barang keluar dari DB
+//    useEffect(() => {
+//     async function getAllBarangKeluarAPI(){
+//         const data = await getAllBarangKeluar();
+//         let rowsData = []
+//         for (const barang of data){
+//             const newBarang = {
+//                 //kodebarang: barang.kodebarang,
+//                 namabarang: barang.namabarang,
+//                 kodeKeluar: barang.kodeKeluar, 
+//                 namaPengambil: barang.namaPengambil,
+//                 quantity: barang.quantity,
+//                 tgl: barang.tgl,
+//                 proyek: barang.proyek,
+//                 keterangan: barang.keterangan,
+//                 tujuan: barang.tujuan,
+//                 satuan: barang.satuan
+//             }
+//             if(newBarang.proyek === proyek){
+//                 rowsData.push(newBarang);
+//             }
+            
+//         }
+//         setRows(rowsData);
+//     }
+//     getAllBarangKeluarAPI();
+// }, [])
+
 
   return (
     <div className="content-wrapper">
@@ -87,7 +126,7 @@ function BarangKeluar(props) {
                 <div className="card-body">
                   <TabelBarang 
                     meta={meta}
-                    data={rows} 
+                    data={searchValue === "" ? rows : filterSearch(searchValue)} 
                   />
                 </div>
                 {/* /.card-body */}

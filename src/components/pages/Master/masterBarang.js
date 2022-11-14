@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import TabelBarang from "../../Table/TabelBarang";
 import SearchBarang from "../../Table/SearchBarang";
 
 import AddIcon from "@mui/icons-material/Add";
 
-import data from '../../../assets/data/masterbarang.json';
+// import data from '../../../assets/data/masterbarang.json';
 
 import {
   Button,
@@ -18,12 +18,13 @@ import {
 import { Berhasil, Gagal } from "../../Dialog/notification";
 import AddBarangMasuk from "../../Dialog/AddBarangMasuk";
 import AddMasterBarang from "../../Dialog/AddMasterBarang";
+import { getAllMasterBarang } from "../../API/repository";
 
 const meta = [
   'Nama Barang' , 'Category' , 'Sub Category', 'Type', 'Merk', 'Satuan', 'Ukuran', 'Proyek', 'Action'
 ]
 
-const rows = data;
+// const rows = data;
 
 export default function MasterBarang(props) {
   const [message, setMessage] = useState("");
@@ -85,6 +86,31 @@ export default function MasterBarang(props) {
     setBerhasil(true);
     setMessage("berhasil menambahkan barang");
   };
+
+  const [rows, setRows] = useState([]);
+  
+  // data master barang dari DB
+  useEffect(() => {
+    async function getMasterBarangAPI(){
+        const data = await getAllMasterBarang();
+        let rowsData = []
+        for (const barang of data){
+            const newBarang = {
+                //kodebarang: barang.kodebarang,
+                namabarang: barang.namabarang,
+                category: barang.category, 
+                subCategory: barang.subCategory,
+                type: barang.type,
+                merk: barang.merk,  
+                satuan: barang.satuan,
+                ukuran: barang.ukuran,
+            };
+            rowsData.push(newBarang);
+        }
+        setRows(rowsData);
+    }
+    getMasterBarangAPI();
+}, [])
 
   return (
     <div className="content-wrapper">
