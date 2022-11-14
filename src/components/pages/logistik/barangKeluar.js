@@ -6,141 +6,141 @@ import SearchBarang from "../../Table/SearchBarang";
 import { IconButton, Tooltip } from "@mui/material";
 
 import AddBarangKeluar from "../../Dialog/AddBarangKeluar";
-import RemoveIcon from '@mui/icons-material/Remove';
 
-import data from '../../../assets/data/barangkeluar.json'
-import { getAllBarangKeluar } from "../../API/repository";
+// import data from '../../../assets/data/barangkeluar.json'
+import { getAllBarangKeluar, getSelectedProyek } from "../../API/repository";
 
 
 const meta = [
-  "Kode Keluar", "Nama Barang", "Quantity", "Nama Pengambil", "Tanggal", "Status", "Satuan", "Proyek", "Keterangan", "Tujuan", "Action"
+  "Nama Barang", "Kode Keluar",  "Quantity", "Nama Pengambil", "Tanggal", "Status", "Satuan", "Proyek", "Keterangan", "Tujuan", "Action"
 ]
 
-const rows = data;
+// const rows = data;
 
 function BarangKeluar(props) {
- 
-  const [addItem, setAddItem] = React.useState(false);
 
-  const openAddDialog = () =>{
-    setAddItem(true)
-  }
+    const proyek = getSelectedProyek();
+  
+    const [addItem, setAddItem] = useState(false);
 
-  const closeAddDialog = () =>{
-    setAddItem(false)
-  }
+    const openAddDialog = () =>{
+      setAddItem(true)
+    }
 
-   /* Search */
-   const [searchValue, changeSearchValue] = useState("");
+    const closeAddDialog = () =>{
+      setAddItem(false)
+    }
 
-   const changeValue = (event) => {
-     changeSearchValue(event.target.value);
-     // console.log('Div lost focus');
-   };
- 
-   const filterSearch = (searchKey) => {
-     const filteredRows = rows.filter((row) =>
-       row.name.toLowerCase().includes(searchKey.toLowerCase())
-     );
-     return filteredRows;
-   };
+    /* Search */
+    const [searchValue, changeSearchValue] = useState("");
 
-//    const [rows, setRows] = useState();
-// data barang keluar dari DB
-//    useEffect(() => {
-//     async function getAllBarangKeluarAPI(){
-//         const data = await getAllBarangKeluar();
-//         let rowsData = []
-//         for (const barang of data){
-//             const newBarang = {
-//                 //kodebarang: barang.kodebarang,
-//                 namabarang: barang.namabarang,
-//                 kodeKeluar: barang.kodeKeluar, 
-//                 namaPengambil: barang.namaPengambil,
-//                 quantity: barang.quantity,
-//                 tgl: barang.tgl,
-//                 proyek: barang.proyek,
-//                 keterangan: barang.keterangan,
-//                 tujuan: barang.tujuan,
-//                 satuan: barang.satuan
-//             }
-//             if(newBarang.proyek === proyek){
-//                 rowsData.push(newBarang);
-//             }
-            
-//         }
-//         setRows(rowsData);
-//     }
-//     getAllBarangKeluarAPI();
-// }, [])
+    const changeValue = (event) => {
+      changeSearchValue(event.target.value);
+      // console.log('Div lost focus');
+    };
+  
+    const filterSearch = (searchKey) => {
+      const filteredRows = rows.filter((row) =>
+        row.name.toLowerCase().includes(searchKey.toLowerCase())
+      );
+      return filteredRows;
+    };
 
-
-  return (
-    <div className="content-wrapper">
-      {/* Content Header (Page header) */}
-      <section className="content-header">
-        <div className="container-fluid">
-          <div className="row mb-2">
-            <div className="col-sm-6">
-              <h1>Barang Keluar</h1>
-            </div>
-            <div className="col-sm-6">
-              <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item">
-                  <a href="#">Logistik</a>
-                </li>
-                <li className="breadcrumb-item active">Barang Keluar</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        {/* /.container-fluid */}
-      </section>
-      <section className="content">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
-              <div className="card">
-              <div 
-                className="card-header" 
-                style={{
-                  display: "flex",
-                  alignItems:'center' 
-                }}>
-                  <div className="card-title">
-                    <h3 className="card-title">List Barang Keluar</h3>
-                  </div>
-                  <div className="card-search" style={{marginLeft:'auto'}}>
-                    <SearchBarang value={searchValue} changeValue={changeValue} />
-                  </div>
-                  <div className="add-item" style={{marginLeft: '5px'}}>
-                    <IconButton onClick={openAddDialog}>
-                      <Tooltip title="Remove">
-                        <AddIcon />
-                      </Tooltip>
-                    </IconButton>
-                    <AddBarangKeluar open={addItem} close={closeAddDialog} />
-                  </div>
-                </div>
-                {/* /.card-header */}
-                <div className="card-body">
-                  <TabelBarang 
-                    meta={meta}
-                    data={searchValue === "" ? rows : filterSearch(searchValue)} 
-                  />
-                </div>
-                {/* /.card-body */}
+    const [rows, setRows] = useState([]);
+    // data barang keluar dari DB 
+    useEffect(() => {
+      async function getAllBarangKeluarAPI(){
+          const data = await getAllBarangKeluar();
+          let rowsData = []
+          for (const barang of data){
+              const newBarang = {
+                  //kodebarang: barang.kodebarang,
+                  namabarang: barang.namabarang,
+                  kodeKeluar: barang.kodeKeluar, 
+                  namaPengambil: barang.namaPengambil,
+                  quantity: barang.quantity,
+                  tgl: barang.tgl,
+                  proyek: barang.proyek,
+                  keterangan: barang.keterangan,
+                  tujuan: barang.tujuan,
+                  satuan: barang.satuan
+              }
+              if(newBarang.proyek === proyek){
+                  rowsData.push(newBarang);
+              }
+              
+          }
+          setRows(rowsData);
+      }
+      getAllBarangKeluarAPI();
+  }, [])
+  
+    return (
+      <div className="content-wrapper">
+        {/* Content Header (Page header) */}
+        <section className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6">
+                <h1>Barang Keluar</h1>
               </div>
-              {/* /.card */}
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item">
+                    <a href="#">Logistik</a>
+                  </li>
+                  <li className="breadcrumb-item active">Barang Keluar</li>
+                </ol>
+              </div>
             </div>
-            {/* /.col */}
           </div>
-          {/* /.row */}
-        </div>
-        {/* /.container-fluid */}
-      </section>
-    </div>
-  );
+          {/* /.container-fluid */}
+        </section>
+        <section className="content">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-12">
+                <div className="card">
+                <div 
+                  className="card-header" 
+                  style={{
+                    display: "flex",
+                    alignItems:'center' 
+                  }}>
+                    <div className="card-title">
+                      <h3 className="card-title">List Barang Keluar</h3>
+                    </div>
+                    <div className="card-search" style={{marginLeft:'auto'}}>
+                      <SearchBarang value={searchValue} changeValue={changeValue} />
+                    </div>
+                    <div className="add-item" style={{marginLeft: '5px'}}>
+                      <IconButton onClick={openAddDialog}>
+                        <Tooltip title="Remove">
+                          <AddIcon />
+                        </Tooltip>
+                      </IconButton>
+                      <AddBarangKeluar open={addItem} close={closeAddDialog} />
+                    </div>
+                  </div>
+                  {/* /.card-header */}
+                  <div className="card-body">
+                    <TabelBarang 
+                      meta={meta}
+                      data={searchValue === "" ? rows : filterSearch(searchValue)} 
+                    />
+                  </div>
+                  {/* /.card-body */}
+                </div>
+                {/* /.card */}
+              </div>
+              {/* /.col */}
+            </div>
+            {/* /.row */}
+          </div>
+          {/* /.container-fluid */}
+        </section>
+      </div>
+    );
 }
 
 export default BarangKeluar;

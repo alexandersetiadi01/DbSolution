@@ -9,7 +9,7 @@ import BarangKeluar from "./components/pages/logistik/barangKeluar";
 import Inventory from "./components/pages/logistik/Inventory";
 import RAP from './components/pages/RAP/RAP';
 import Progress from './components/pages/RAP/Progress';
-import { Proyek } from './components/pages/user/Proyek';
+import Proyek from './components/pages/user/Proyek'
 import MasterBarang from './components/pages/Master/masterBarang';
 import CodeMaster from './components/pages/Master/codeMaster';
 import CodeDetail from './components/pages/Master/codeDetail';
@@ -49,7 +49,7 @@ function App() {
         {/* User */}
         <Route path="/" element={<LoginLayout />}>
           <Route index element={<Login />}></Route>
-          <Route path='proyek' element={<Proyek />}></Route>
+          <Route path='/proyek' element={<Proyek />}></Route>
         </Route>
 
 

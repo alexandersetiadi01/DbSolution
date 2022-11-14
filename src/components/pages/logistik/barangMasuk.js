@@ -5,8 +5,6 @@ import SearchBarang from "../../Table/SearchBarang";
 
 import AddIcon from "@mui/icons-material/Add";
 
-import data from '../../../assets/data/barangmasuk.json'
-
 import {
   Button,
   Paper,
@@ -17,30 +15,16 @@ import {
 // import AddBarangMasuk from "../../Dialog/barangMasuk.js/AddBarangMasuk";
 import { Berhasil, Gagal } from "../../Dialog/notification";
 import AddBarangMasuk from "../../Dialog/AddBarangMasuk";
-import { getAllBarangMasuk } from "../../API/repository";
+import { getAllBarangMasuk, getSelectedProyek } from "../../API/repository";
 
 const meta = [
-  "Kode Masuk", "Nama Barang", "Nama Penerima", "Quantity", "No Surat Jalan", "Status", "Lokasi", "Satuan", "Proyek", "Keterangan", "Tanggal", "Action"
+  "Nama Barang", "Kode Masuk",  "Nama Penerima", "Quantity", "No Surat Jalan", "Status", "Lokasi", "Satuan", "Proyek", "Keterangan", "Tanggal", "Action"
 ]
 
-const rows = data;
+// const rows = data;
 
 export default function BarangMasuk(props) {
-  const [message, setMessage] = useState("");
-  const [berhasil, setBerhasil] = useState(false);
-  const closeSuccess = () => {
-    setBerhasil(false);
-  };
-
-  const [gagal, setGagal] = useState(false);
-  const closeError = () => {
-    setGagal(false);
-  };
-
-  const [suratJalan, setSuratJalan] = useState(true);
-  const pakaiSuratJalan = () => {
-    setSuratJalan(!suratJalan);
-  };
+  const proyek = getSelectedProyek();
 
   const detail = {
     namabarang: "",
@@ -125,36 +109,36 @@ export default function BarangMasuk(props) {
     setAddItem(false);
   };
 
-  //data barang masuk dari DB
-  // const [rows, setRows] = useState([]);
+  // data barang masuk dari DB
+  const [rows, setRows] = useState([]);
 
-  // useEffect(() => {
-  //     async function getBarangMasukAPI(){
-  //         const data = await getAllBarangMasuk();
-  //         let rowsData = []
-  //         for (const barang of data){
-  //             const newBarang = {
-  //                 //kodebarang: barang.kodebarang,
-  //                 namabarang: barang.namabarang,
-  //                 kodemasuk: barang.kodemasuk, 
-  //                 noSuratJalan: barang.noSuratJalan,
-  //                 namaPenerima: barang.namaPenerima,
-  //                 quantity: barang.quantity, 
-  //                 satuan: barang.satuan,  
-  //                 tgl: barang.tgl,
-  //                 lokasi: barang.lokasi,
-  //                 proyek: barang.proyek,
-  //                 keterangan: barang.keterangan
-  //             }
-  //             if(newBarang.proyek === proyek){
-  //                 rowsData.push(newBarang);
-  //             }
+  useEffect(() => {
+      async function getBarangMasukAPI(){
+          const data = await getAllBarangMasuk();
+          let rowsData = []
+          for (const barang of data){
+              const newBarang = {
+                  //kodebarang: barang.kodebarang,
+                  namabarang: barang.namabarang,
+                  kodemasuk: barang.kodemasuk, 
+                  noSuratJalan: barang.noSuratJalan,
+                  namaPenerima: barang.namaPenerima,
+                  quantity: barang.quantity, 
+                  satuan: barang.satuan,  
+                  tgl: barang.tgl,
+                  lokasi: barang.lokasi,
+                  proyek: barang.proyek,
+                  keterangan: barang.keterangan
+              }
+              if(newBarang.proyek === proyek){
+                  rowsData.push(newBarang);
+              }
               
-  //         }
-  //         setRows(rowsData);
-  //     }
-  //     getBarangMasukAPI();
-  // }, [])
+          }
+          setRows(rowsData);
+      }
+      getBarangMasukAPI();
+  }, [])
 
   return (
     <div className="content-wrapper">

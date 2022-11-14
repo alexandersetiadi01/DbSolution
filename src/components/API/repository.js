@@ -56,8 +56,8 @@ async function addBanyakBarangMasuk(barang) {
     return response.data;
 }
 
-async function getAllBarangMasuk(){
-    const response = await axios.get(API_HOST + "/api/barangMasuk/listBarangMasuk");
+async function getAllBarangMasuk(proyek){
+    const response = await axios.get(API_HOST + "/api/barangMasuk/listBarangMasuk", proyek);
 
     return response.data;
 }
