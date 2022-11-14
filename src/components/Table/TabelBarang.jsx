@@ -58,7 +58,7 @@ export default class TabelBarang extends Component {
               <TableRow>
                 {
                   this.props.meta.map((row)=>(
-                        <TableCell style={tableHeadStyle} align='center'>
+                        <TableCell style={tableHeadStyle} align='left'>
                           {row}
                         </TableCell>
                     ))
@@ -77,9 +77,9 @@ export default class TabelBarang extends Component {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     {Object.keys(row).filter(word => !['kodePO', 'createdAt', 'updatedAt'].includes(word)).map((head)=>(
-                      <TableCell align="center">{row[head]}</TableCell>
+                      <TableCell align="left">{row[head]}</TableCell>
                     ))}
-                    <TableCell align="right">
+                    <TableCell align="center">
                       <Tooltip title="Edit">
                         <IconButton onClick={() => window.alert("edit " + row.name) }color="primary">
                           <EditIcon />

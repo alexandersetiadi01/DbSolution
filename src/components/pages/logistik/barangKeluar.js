@@ -11,8 +11,12 @@ import AddBarangKeluar from "../../Dialog/AddBarangKeluar";
 import { getAllBarangKeluar, getSelectedProyek } from "../../API/repository";
 
 
+const meta1 = [
+  "Nama Barang", "Kode Keluar",  "Quantity", "Nama Pengambil", "Tanggal", "Satuan",  "Keterangan", "Tujuan", "Action"
+]
+
 const meta = [
-  "Nama Barang", "Kode Keluar",  "Quantity", "Nama Pengambil", "Tanggal", "Status", "Satuan", "Proyek", "Keterangan", "Tujuan", "Action"
+  "Nama Barang", "Kode Keluar",  "Nama Pengambil", "Quantity", "Tanggal", "Keterangan", "Tujuan", "Satuan", "Action"
 ]
 
 // const rows = data;
@@ -53,21 +57,25 @@ function BarangKeluar(props) {
           const data = await getAllBarangKeluar();
           let rowsData = []
           for (const barang of data){
+            if(barang.proyek === proyek){
               const newBarang = {
-                  //kodebarang: barang.kodebarang,
-                  namabarang: barang.namabarang,
-                  kodeKeluar: barang.kodeKeluar, 
-                  namaPengambil: barang.namaPengambil,
-                  quantity: barang.quantity,
-                  tgl: barang.tgl,
-                  proyek: barang.proyek,
-                  keterangan: barang.keterangan,
-                  tujuan: barang.tujuan,
-                  satuan: barang.satuan
+                //kodebarang: barang.kodebarang,
+                namabarang: barang.namabarang,
+                kodeKeluar: barang.kodeKeluar, 
+                namaPengambil: barang.namaPengambil,
+                quantity: barang.quantity,
+                tgl: barang.tgl,
+                // proyek: barang.proyek,
+                keterangan: barang.keterangan,
+                tujuan: barang.tujuan,
+                satuan: barang.satuan
               }
-              if(newBarang.proyek === proyek){
-                  rowsData.push(newBarang);
-              }
+              rowsData.push(newBarang);
+            }
+              
+              // if(newBarang.proyek === proyek){
+              //     rowsData.push(newBarang);
+              // }
               
           }
           setRows(rowsData);

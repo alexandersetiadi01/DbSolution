@@ -21,7 +21,7 @@ import AddMasterBarang from "../../Dialog/AddMasterBarang";
 import { getAllMasterBarang } from "../../API/repository";
 
 const meta = [
-  'Nama Barang' , 'Category' , 'Sub Category', 'Type', 'Merk', 'Satuan', 'Ukuran', 'Proyek', 'Action'
+  'Nama Barang' , 'Category' , 'Sub Category', 'Type', 'Merk', 'Satuan', 'Ukuran', 'Action'
 ]
 
 // const rows = data;

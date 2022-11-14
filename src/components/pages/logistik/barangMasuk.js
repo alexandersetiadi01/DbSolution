@@ -18,7 +18,7 @@ import AddBarangMasuk from "../../Dialog/AddBarangMasuk";
 import { getAllBarangMasuk, getSelectedProyek } from "../../API/repository";
 
 const meta = [
-  "Nama Barang", "Kode Masuk",  "Nama Penerima", "Quantity", "No Surat Jalan", "Status", "Lokasi", "Satuan", "Proyek", "Keterangan", "Tanggal", "Action"
+  "Nama Barang", "Kode Masuk", "Surat Jalan", "Nama Penerima", "Quantity", "Satuan", "Tanggal", "Lokasi", "Keterangan",  "Action"
 ]
 
 // const rows = data;
@@ -117,23 +117,22 @@ export default function BarangMasuk(props) {
           const data = await getAllBarangMasuk();
           let rowsData = []
           for (const barang of data){
+            if(barang.proyek === proyek){
               const newBarang = {
-                  //kodebarang: barang.kodebarang,
-                  namabarang: barang.namabarang,
-                  kodemasuk: barang.kodemasuk, 
-                  noSuratJalan: barang.noSuratJalan,
-                  namaPenerima: barang.namaPenerima,
-                  quantity: barang.quantity, 
-                  satuan: barang.satuan,  
-                  tgl: barang.tgl,
-                  lokasi: barang.lokasi,
-                  proyek: barang.proyek,
-                  keterangan: barang.keterangan
+                //kodebarang: barang.kodebarang,
+                namabarang: barang.namabarang,
+                kodemasuk: barang.kodemasuk, 
+                noSuratJalan: barang.noSuratJalan,
+                namaPenerima: barang.namaPenerima,
+                quantity: barang.quantity, 
+                satuan: barang.satuan,  
+                tgl: barang.tgl,
+                lokasi: barang.lokasi,
+                // proyek: barang.proyek,
+                keterangan: barang.keterangan
               }
-              if(newBarang.proyek === proyek){
-                  rowsData.push(newBarang);
-              }
-              
+              rowsData.push(newBarang);
+            }
           }
           setRows(rowsData);
       }
