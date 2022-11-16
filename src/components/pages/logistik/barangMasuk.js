@@ -12,6 +12,8 @@ import {
   Tooltip,
 } from "@mui/material";
 
+import RefreshIcon from '@mui/icons-material/Refresh';
+
 // import AddBarangMasuk from "../../Dialog/barangMasuk.js/AddBarangMasuk";
 import { Berhasil, Gagal } from "../../Dialog/notification";
 import AddBarangMasuk from "../../Dialog/AddBarangMasuk";
@@ -38,7 +40,7 @@ export default function BarangMasuk(props) {
     lokasi: "",
     action: "",
     username: "",
-    proyek: "",
+    proyek: proyek,
     keterangan: "",
     satuan: "",
     supplier: "",
@@ -112,32 +114,37 @@ export default function BarangMasuk(props) {
   // data barang masuk dari DB
   const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-      async function getBarangMasukAPI(){
-          const data = await getAllBarangMasuk();
-          let rowsData = []
-          for (const barang of data){
-            if(barang.proyek === proyek){
-              const newBarang = {
-                //kodebarang: barang.kodebarang,
-                namabarang: barang.namabarang,
-                kodemasuk: barang.kodemasuk, 
-                noSuratJalan: barang.noSuratJalan,
-                namaPenerima: barang.namaPenerima,
-                quantity: barang.quantity, 
-                satuan: barang.satuan,  
-                tgl: barang.tgl,
-                lokasi: barang.lokasi,
-                // proyek: barang.proyek,
-                keterangan: barang.keterangan
-              }
-              rowsData.push(newBarang);
-            }
-          }
-          setRows(rowsData);
+  const getBarangMasukAPI = async() => {
+    const data = await getAllBarangMasuk(detail);
+    let rowsData = []
+    for (const barang of data){
+      if(barang.proyek === proyek){
+        const newBarang = {
+          //kodebarang: barang.kodebarang,
+          namabarang: barang.namabarang,
+          kodemasuk: barang.kodemasuk, 
+          noSuratJalan: barang.noSuratJalan,
+          namaPenerima: barang.namaPenerima,
+          quantity: barang.quantity, 
+          satuan: barang.satuan,  
+          tgl: barang.tgl,
+          lokasi: barang.lokasi,
+          // proyek: barang.proyek,
+          keterangan: barang.keterangan
+        }
+        rowsData.push(newBarang);
       }
+    }
+    setRows(rowsData);
+  }
+
+  useEffect(() => {
       getBarangMasukAPI();
   }, [])
+
+  const refresh = () => {
+    getBarangMasukAPI();
+  }
 
   return (
     <div className="content-wrapper">
@@ -185,6 +192,11 @@ export default function BarangMasuk(props) {
                     <IconButton onClick={openAddDialog}>
                       <Tooltip title="Add">
                         <AddIcon />
+                      </Tooltip>
+                    </IconButton>
+                    <IconButton onClick={refresh}>
+                      <Tooltip title="refresh">
+                        <RefreshIcon />
                       </Tooltip>
                     </IconButton>
                     <AddBarangMasuk

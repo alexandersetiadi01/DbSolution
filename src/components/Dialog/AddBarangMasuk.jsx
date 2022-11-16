@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -34,6 +34,16 @@ import CheckIcon from "@mui/icons-material/Check";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { Notif } from "./notification";
 import { InConfirmation } from "./Confirmation";
+import {
+  addBanyakBarangMasuk,
+  getAllSatuan,
+  getNamaMasterBarang,
+  getSelectedProyek,
+  inventoryMasuk,
+  seeAllProyek,
+  setSelectedProyek,
+  updateOutstanding,
+} from "../API/repository";
 
 const proyekAsal = [
   {
@@ -44,45 +54,79 @@ const proyekAsal = [
   },
 ];
 
-const barang = [
-  {
-    kodeBarang: 1,
-    namaBarang: "A",
-  },
-  {
-    kodeBarang: 2,
-    namaBarang: "B",
-  },
-];
-
-const lokasi = [
-  {
-    kodeLokasi: 1,
-    namaLokasi: "A",
-  },
-  {
-    kodeLokasi: 2,
-    namaLokasi: "B",
-  },
-];
-
 export default function AddBarangMasuk(props) {
-
-  const [confirm, setConfirm] = useState(false);
-  const openConfirm = () =>{
-    setConfirm(true)
-  }
-  const closeConfirm = () =>{
-    setConfirm(false)
-  }
-
   const [message, setMessage] = useState();
   const [alertType, setAlertType] = useState();
   const [alert, setAlert] = useState(false);
+  const proyek = getSelectedProyek();
+
+  const [masterBarang, setMasterBarang] = useState([]);
+  const getNamaBarang = async () => {
+    const data = await getNamaMasterBarang();
+    let rowsData = [];
+    for (const barang of data) {
+      const newBarang = {
+        //kodebarang: barang.kodebarang,
+        namabarang: barang.namabarang,
+      };
+      rowsData.push(newBarang);
+    }
+    setMasterBarang(rowsData);
+  };
+
+  useEffect(() => {
+    getNamaBarang();
+  }, []);
+
+  const [lokasi, setLokasi] = useState([]);
+  useEffect(() => {
+    async function getProyekAPI() {
+      const datas = await seeAllProyek();
+      let rowsData = [];
+      for (const data of datas) {
+        const newData = {
+          namaLokasi: data.namaProyek,
+        };
+        rowsData.push(newData);
+      }
+      setLokasi(rowsData);
+    }
+    getProyekAPI();
+  }, []);
+
+  const [satuan, setSatuan] = useState([]);
+  useEffect(() => {
+    async function getSatuanAPI() {
+      const data = await getAllSatuan();
+      let rowsData = [];
+      for (const barang of data) {
+        const newBarang = {
+          //kodebarang: barang.kodebarang,
+          satuan: barang.satuan,
+        };
+        rowsData.push(newBarang);
+      }
+      setSatuan(rowsData);
+    }
+    getSatuanAPI();
+  }, []);
+
+  const [confirm, setConfirm] = useState(false);
+  const openConfirm = () => {
+    setConfirm(true);
+  };
+  const closeConfirm = () => {
+    setConfirm(false);
+  };
 
   const closeAlert = () => {
     setAlert(false);
-  }
+  };
+
+  const getDate = () => {
+    var today = dayjs().format("DD/MM/YYYY");
+    return today;
+  };
 
   const detail = {
     // namaBarang: "",
@@ -92,21 +136,16 @@ export default function AddBarangMasuk(props) {
     noSuratJalan: "",
     proyekAsal: "",
     // noSuratJalan2: "",
-    tgl: "",
+    tgl: '',
     lokasi: "",
     action: "",
     username: "",
-    proyek: "",
+    proyek: proyek,
     // keterangan: "",
     // satuan: "",
     supplier: "",
-    barang: []
+    barang: [],
   };
-  
-  const getDate = () =>{
-    var today = dayjs().format('DD/MM/YYYY')
-    return today
-  }
 
   const [inputs, setInputs] = useState(detail);
   const handleInputChange = (event) => {
@@ -140,7 +179,7 @@ export default function AddBarangMasuk(props) {
     let newArrayBarang = [...arrayBarang];
     newArrayBarang[i][e.target.name] = e.target.value;
     setArrayBarang(newArrayBarang);
-    setInputs({ ...inputs, 'barang' : newArrayBarang });
+    setInputs({ ...inputs, barang: newArrayBarang });
   };
 
   let resetBarang = () => {
@@ -156,26 +195,76 @@ export default function AddBarangMasuk(props) {
     setSuratJalan(!suratJalan);
   };
 
-  const addBarangMasuk = () => {
-    setInputs({ ...inputs, 'tgl': getDate()});
-    openConfirm()
-    // setAlertType("success");
-    // setMessage("Berhasil");
-    // setAlert(true);
+  const addBarangMasuk = async() => {
+    // setInputs({ ...inputs, 'tgl': getDate()});
+    // openConfirm();
 
-    // setInputs(detail);
-    // setArrayBarang([]);
+    try{
+      for (let i = 0; i < arrayBarang.length; i++) {
+        //nanti bikinnya di function konversi biar gk keliatan ribet
+        if (arrayBarang[i].namabarang === "Papan 2/20. P 4mtr") {
+          arrayBarang[i].quantity = arrayBarang[i].quantity * 62;
+          arrayBarang[i].satuan = "lbr";
+        }
+        if (arrayBarang[i].namabarang === "Kaso Borneo 4/6. P 4mtr") {
+          arrayBarang[i].quantity = arrayBarang[i].quantity * 104;
+          arrayBarang[i].satuan = "btg";
+        }
+        if (arrayBarang[i].namabarang === "Kaso Borneo 5/7. P 4mtr") {
+          arrayBarang[i].quantity = arrayBarang[i].quantity * 71;
+          arrayBarang[i].satuan = "btg";
+        }
+        if (arrayBarang[i].namabarang === "Karpet Talang; 0.9x60 m") {
+          arrayBarang[i].quantity = arrayBarang[i].quantity * 50;
+          arrayBarang[i].satuan = "m1";
+        }
+        if (
+          arrayBarang[i].namabarang === "Paku 7 (23kg)" ||
+          arrayBarang[i].namabarang === "Paku 5 (23kg)" ||
+          arrayBarang[i].namabarang === "Paku 10 (23kg)"
+        ) {
+          arrayBarang[i].quantity = arrayBarang[i].quantity * 23;
+          arrayBarang[i].satuan = "kg";
+        }
+        if (
+          arrayBarang[i].namabarang === "Paku 7 (25kg)" ||
+          arrayBarang[i].namabarang === "Paku 5 (25kg)" ||
+          arrayBarang[i].namabarang === "Paku 10 (25kg)"
+        ) {
+          arrayBarang[i].quantity = arrayBarang[i].quantity * 25;
+          arrayBarang[i].satuan = "kg";
+        }
+      }
+      await addBanyakBarangMasuk(arrayBarang);
+      props.close();
+      closeConfirm();
+      setInputs(detail);
+      setArrayBarang([]);
+      
+      //notif berhasil add
+      setAlertType("success");
+      setMessage("Berhasil menyimpan barang masuk");
+      setAlert(true);
+    }catch(e){
+      //notif gagal add
+      setAlertType("success");
+      setMessage(e);
+      setAlert(true);
+      
+    }
+    // inventoryMasuk(arrayBarang);
+    // await updateOutstanding(arrayBarang);
+
+    
   };
 
-    // console.log(inputs);
+  // console.log(inputs);
 
   return (
     <>
       <Dialog open={props.open} onClose={props.close} maxWidth="lg">
         <DialogTitle>Barang Masuk</DialogTitle>
-        <DialogContent
-          sx={{paddingBottom : 0}}
-        >
+        <DialogContent sx={{ paddingBottom: 0 }}>
           <ValidatorForm onSubmit={addArrayBarang}>
             <Grid
               container
@@ -200,6 +289,23 @@ export default function AddBarangMasuk(props) {
                 />
               </Grid>
               <Grid item xs={6}>
+                <TextValidator
+                  fullWidth
+                  focused
+                  margin="dense"
+                  id="tgl"
+                  name="tgl"
+                  label="tgl"
+                  value={inputs.tgl}
+                  onChange={handleInputChange}
+                  type="date"
+                  variant="standard"
+                  validators={["required"]}
+                  errorMessages={["required"]}
+                  autoComplete="off"
+                />
+              </Grid>
+              <Grid item xs={6}>
                 <FormControl fullWidth sx={{ margin: "dense", marginTop: 1 }}>
                   <InputLabel id="Lokasi" sx={{ margin: "dense" }}>
                     Lokasi
@@ -209,7 +315,7 @@ export default function AddBarangMasuk(props) {
                     autoFocus
                     margin="dense"
                     id="Lokasi"
-                    labelId="Lokasi"
+                    // //labelid="Lokasi"
                     label="Lokasi"
                     name="lokasi"
                     value={inputs.lokasi}
@@ -222,7 +328,7 @@ export default function AddBarangMasuk(props) {
                     //   InputProps={{ inputProps: { maxLength: 6 } }}
                   >
                     {lokasi.map((item, index) => (
-                      <MenuItem key={item.kodeLokasi} value={item.namaLokasi}>
+                      <MenuItem key={index} value={item.namaLokasi}>
                         {item.namaLokasi}
                       </MenuItem>
                     ))}
@@ -239,7 +345,7 @@ export default function AddBarangMasuk(props) {
                 </InputLabel>
                 <Switch
                   id="cekSuratJalan"
-                  labelId="cekSuratJalan"
+                  // //labelid="cekSuratJalan"
                   // inputRef={value => value && value.focus()}
                   label="cekSuratJalan"
                   inputProps={{ "aria-label": "controlled" }}
@@ -273,7 +379,7 @@ export default function AddBarangMasuk(props) {
                       // fullWidth
                       autoFocus
                       margin="dense"
-                      labelId="Proyek Asal"
+                      //labelid="Proyek Asal"
                       id="proyekAsal"
                       name="proyekAsal"
                       label="Proyek Asal"
@@ -303,18 +409,22 @@ export default function AddBarangMasuk(props) {
                     Barang
                   </Button>
                 </Tooltip>
-                </Grid>
-                <Grid item xs={2}>
+              </Grid>
+              <Grid item xs={2}>
                 <Tooltip title="Delete Barang">
-                  <Button variant="contained" color="error" onClick={resetBarang}>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={resetBarang}
+                  >
                     <DeleteIcon />
-                      Barang
+                    Barang
                   </Button>
                 </Tooltip>
               </Grid>
             </Grid>
           </ValidatorForm>
-          <ValidatorForm onSubmit={addBarangMasuk}>
+          <ValidatorForm onSubmit={openConfirm}>
             <TableContainer component={Paper}>
               <Table sx={{ width: "100vw" }} aria-label="simple table">
                 <TableHead>
@@ -329,9 +439,7 @@ export default function AddBarangMasuk(props) {
                 <TableBody>
                   {arrayBarang.map((item, index) => (
                     <TableRow key={index}>
-                      <TableCell
-                        sx={{width:'25vw'}}
-                      >
+                      <TableCell sx={{ width: "25vw" }}>
                         <FormControl
                           fullWidth
                           sx={{ margin: "dense", marginTop: 1 }}
@@ -340,67 +448,79 @@ export default function AddBarangMasuk(props) {
                             // fullWidth
                             // autoFocus
                             margin="dense"
-                            labelId="Nama Barang"
+                            //labelid="Nama Barang"
                             id="namaBarang"
                             name="namaBarang"
                             placeholder="namaBarang"
                             variant="standard"
                             type="text"
                             //   InputProps={{ inputProps: { maxLength: 6 } }}
-                            defaultValue={item.namaBarang}
+                            // defaultValue={item.namaBarang}
                             value={item.namaBarang}
-                            onChange={e => handleArrayBarang(index, e)}
+                            onChange={(e) => handleArrayBarang(index, e)}
                             validators={["required"]}
                             errorMessages={["required"]}
                           >
-                            {barang.map((item, index) => (
-                              <MenuItem key={item.kodeBarang} value={item.namaBarang}>
-                                {item.namaBarang}
+                            {masterBarang.map((item, index) => (
+                              <MenuItem key={index} value={item.namabarang}>
+                                {item.namabarang}
                               </MenuItem>
                             ))}
                           </Select>
                         </FormControl>
                       </TableCell>
-                      <TableCell
-                        sx={{width:'15vw'}}
-                      >
+                      <TableCell sx={{ width: "15vw" }}>
                         <TextValidator
                           type="number"
                           margin="dense"
                           variant="standard"
                           name="quantity"
                           inputProps={{
-                            style:{
-                              textAlign:'right',
+                            style: {
+                              textAlign: "right",
                               // marginRight: '10px'
                             },
-                            min:0
+                            min: 0,
                           }}
                           value={item.quantity}
-                          onChange={e => handleArrayBarang(index, e)}
+                          onChange={(e) => handleArrayBarang(index, e)}
                           validators={["required"]}
                           errorMessages={["required"]}
                         />
                       </TableCell>
 
-                      <TableCell
-                        sx={{width:'20vw'}}
-                      >
-                        <TextValidator
-                          type="text"
-                          margin="dense"
-                          variant="standard"
-                          name="satuan"
-                          value={item.satuan}
-                          onChange={e => handleArrayBarang(index, e)}
-                          validators={["required"]}
-                          errorMessages={["required"]}
-                        />
+                      <TableCell sx={{ width: "20vw" }}>
+                        <FormControl
+                          fullWidth
+                          sx={{ margin: "dense", marginTop: 1 }}
+                        >
+                          <Select
+                            // fullWidth
+                            // autoFocus
+                            margin="dense"
+                            //labelid="satuan"
+                            id="satuan"
+                            name="satuan"
+                            placeholder="satuan"
+                            variant="standard"
+                            type="text"
+                            //   InputProps={{ inputProps: { maxLength: 6 } }}
+                            // defaultValue={item.satuan}
+                            value={item.satuan}
+                            onChange={(e) => handleArrayBarang(index, e)}
+                            validators={["required"]}
+                            errorMessages={["required"]}
+                          >
+                            {satuan.map((item, index) => (
+                              <MenuItem key={item.satuan} value={item.satuan}>
+                                {item.satuan}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
                       </TableCell>
 
-                      <TableCell
-                        sx={{width:'25vw'}}
-                      >
+                      <TableCell sx={{ width: "25vw" }}>
                         <TextValidator
                           fullWidth
                           type="text"
@@ -408,7 +528,7 @@ export default function AddBarangMasuk(props) {
                           variant="standard"
                           name="keterangan"
                           value={item.keterangan}
-                          onChange={e => handleArrayBarang(index, e)}
+                          onChange={(e) => handleArrayBarang(index, e)}
                           validators={["required"]}
                           errorMessages={["required"]}
                         />
@@ -427,14 +547,16 @@ export default function AddBarangMasuk(props) {
             </TableContainer>
             <DialogActions
               sx={{
-                marginBottom:0,
-                marginTop: 2
+                marginBottom: 0,
+                marginTop: 2,
               }}
             >
               <Button color="error" onClick={props.close}>
                 Cancel
               </Button>
-              <Button color="success" type="submit">Save</Button>
+              <Button color="success" type="submit">
+                Save
+              </Button>
             </DialogActions>
           </ValidatorForm>
         </DialogContent>
@@ -445,13 +567,20 @@ export default function AddBarangMasuk(props) {
           <Button onClick={addBarangMasuk}>Add</Button>
         </DialogActions> */}
       </Dialog>
-      <InConfirmation 
+      <InConfirmation
         open={confirm}
         cancel={closeConfirm}
         data={inputs}
+        detail={arrayBarang}
+        handleAdd={addBarangMasuk}
       />
 
-      {/* <Notif open={alert} close={closeAlert} type={alertType} message={message}/> */}
+      <Notif
+        open={alert}
+        close={closeAlert}
+        type={alertType}
+        message={message}
+      />
     </>
   );
 }
@@ -561,7 +690,7 @@ export default function AddBarangMasuk(props) {
 //                         </InputLabel>
 //                         <Switch
 //                             id="cekSuratJalan"
-//                             labelId="cekSuratJalan"
+//                             //labelid="cekSuratJalan"
 //                             // inputRef={value => value && value.focus()}
 //                             label="cekSuratJalan"
 //                             inputProps={{ "aria-label": "controlled" }}

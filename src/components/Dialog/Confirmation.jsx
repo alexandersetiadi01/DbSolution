@@ -147,6 +147,9 @@ function InConfirmation(props){
                             <Typography>
                                 Tanggal : 
                             </Typography>
+                            <Typography>
+                                Nama Penerima : 
+                            </Typography>
                             {
                                 props.data.noSuratJalan !== '' ? 
                                 <Typography>
@@ -157,9 +160,6 @@ function InConfirmation(props){
                                     Proyek Asal : 
                                 </Typography>
                             } 
-                            <Typography>
-                                Nama Penerima : 
-                            </Typography>
                             <Typography>
                                 Lokasi : 
                             </Typography>  
@@ -213,7 +213,8 @@ function InConfirmation(props){
                                     </TableHead>
                                     <TableBody>
                                         {
-                                            props.data.barang.map((key, index) =>(
+                                            // props.data.barang.map((key, index) =>(
+                                                props.detail.map((key, index) =>(
                                                 <TableRow>
                                                     <TableCell>
                                                         {key.namaBarang}

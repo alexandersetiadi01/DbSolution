@@ -1,12 +1,34 @@
-import React from "react";
-import TabelBarang from '../../Table/TabelBarang';
-import rows from '../../../assets/data/inventory.json';
+import React, { useEffect, useState } from "react";
+import TabelBarang from "../../Table/TabelBarang";
+import { getInventory, getSelectedProyek } from "../../API/repository";
 
-const meta = [
-  "ID" , "Nama Barang", "Quantity", "Satuan", "Proyek"
-]
+const meta = ["ID", "Nama Barang", "Quantity", "Satuan"];
 
 function Inventory(props) {
+  const proyek = getSelectedProyek();
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    async function getinventoryAPI() {
+      let rowsData = [];
+
+      const data = await getInventory({proyek: proyek});
+      for (const barang of data) {
+          const newBarang = {
+            namabarang: barang.namabarang,
+            quantity: barang.quantity,
+            // proyek: barang.proyek,
+            satuan: barang.satuan,
+          };
+
+          rowsData.push(newBarang);
+    
+      }
+      setRows(rowsData);
+    }
+    getinventoryAPI();
+  }, []);
+
   return (
     <div className="content-wrapper">
       {/* Content Header (Page header) */}
@@ -38,10 +60,7 @@ function Inventory(props) {
                 </div>
                 {/* /.card-header */}
                 <div className="card-body">
-                  <TabelBarang 
-                    data={rows}
-                    meta={meta}
-                  />
+                  <TabelBarang data={rows} meta={meta} />
                 </div>
                 {/* /.card-body */}
               </div>

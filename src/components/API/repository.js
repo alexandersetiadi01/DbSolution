@@ -16,6 +16,12 @@ async function getAllMasterBarang(){
     return response.data;
 }
 
+async function getNamaMasterBarang(){
+    const response = await axios.get(API_HOST + "/api/masterBarang/seeNamaBarang");  
+
+    return response.data;
+}
+
 async function updateMasterBarang(barang){
     const response = await axios.put(API_HOST + "/api/masterBarang/update", barang);
 
@@ -56,8 +62,8 @@ async function addBanyakBarangMasuk(barang) {
     return response.data;
 }
 
-async function getAllBarangMasuk(proyek){
-    const response = await axios.get(API_HOST + "/api/barangMasuk/listBarangMasuk", proyek);
+async function getAllBarangMasuk(barang){
+    const response = await axios.post(API_HOST + "/api/barangMasuk/listBarangMasuk", barang);
 
     return response.data;
 }
@@ -88,16 +94,16 @@ async function addBarangKeluar(barang) {
     return response.data;
 }
 
-async function getAllBarangKeluar(){
-    const response = await axios.get(API_HOST + "/api/barangKeluar");
+async function getAllBarangKeluar(barang){
+    const response = await axios.post(API_HOST + "/api/barangKeluar", barang);
 
     return response.data;
 }
 
 //inventory
 //hanya ini yg dipake
-async function getInventory(){
-    const response = await axios.get(API_HOST + "/api/inventory/seeInventory");
+async function getInventory(barang){
+    const response = await axios.post(API_HOST + "/api/inventory/seeInventory", barang);
 
     return response.data;
 }
@@ -109,19 +115,19 @@ async function newInventory(barang){
 }
 
 async function findInventory(namabarang, proyek){
-    const response = await axios.get(API_HOST + "/api/inventory/find", {params:{namabarang, proyek}});
+    const response = await axios.post(API_HOST + "/api/inventory/find", {params:{namabarang, proyek}});
 
     return response.data;
 }
 
 async function inventoryMasuk(barang){
-    const response = await axios.put(API_HOST + "/api/inventory/inventoryMasuk", barang);
+    const response = await axios.post(API_HOST + "/api/inventory/inventoryMasuk", barang);
 
     return response.data;
 }
 
 async function inventoryKeluar(barang){
-    const response = await axios.put(API_HOST + "/api/inventory/inventoryKeluar", barang);
+    const response = await axios.post(API_HOST + "/api/inventory/inventoryKeluar", barang);
 
     return response.data;
 }
@@ -359,7 +365,7 @@ async function addRAP(barang){
 }
 
 export{
-    createBarang, getAllMasterBarang, getMasterBarangByName, checkMasterBarang, updateMasterBarang,
+    createBarang, getAllMasterBarang, getMasterBarangByName, checkMasterBarang, updateMasterBarang, getNamaMasterBarang,
     addBarangMasuk, getAllBarangMasuk, addBarangSisa,getAllBarangSisa, getBarangMasukPO, addBanyakBarangMasuk, getSuratJalan,
     addBarangKeluar, getAllBarangKeluar,
     getInventory,

@@ -4,7 +4,7 @@ import TabelBarang from "../../Table/TabelBarang";
 import AddIcon from "@mui/icons-material/Add";
 import SearchBarang from "../../Table/SearchBarang";
 import { IconButton, Tooltip } from "@mui/material";
-
+import RefreshIcon from '@mui/icons-material/Refresh';
 import AddBarangKeluar from "../../Dialog/AddBarangKeluar";
 
 // import data from '../../../assets/data/barangkeluar.json'
@@ -24,6 +24,24 @@ const meta = [
 function BarangKeluar(props) {
 
     const proyek = getSelectedProyek();
+
+    const detail = {
+      namabarang: "",
+      namaPenerima: "",
+      quantity: "",
+      // noSuratJalan1: "",
+      noSuratJalan: "",
+      proyekAsal: "",
+      // noSuratJalan2: "",
+      tgl: "",
+      lokasi: "",
+      action: "",
+      username: "",
+      proyek: proyek,
+      keterangan: "",
+      satuan: "",
+      supplier: "",
+    };
   
     const [addItem, setAddItem] = useState(false);
 
@@ -52,36 +70,33 @@ function BarangKeluar(props) {
 
     const [rows, setRows] = useState([]);
     // data barang keluar dari DB 
-    useEffect(() => {
-      async function getAllBarangKeluarAPI(){
-          const data = await getAllBarangKeluar();
-          let rowsData = []
-          for (const barang of data){
-            if(barang.proyek === proyek){
-              const newBarang = {
-                //kodebarang: barang.kodebarang,
-                namabarang: barang.namabarang,
-                kodeKeluar: barang.kodeKeluar, 
-                namaPengambil: barang.namaPengambil,
-                quantity: barang.quantity,
-                tgl: barang.tgl,
-                // proyek: barang.proyek,
-                keterangan: barang.keterangan,
-                tujuan: barang.tujuan,
-                satuan: barang.satuan
-              }
-              rowsData.push(newBarang);
-            }
-              
-              // if(newBarang.proyek === proyek){
-              //     rowsData.push(newBarang);
-              // }
-              
-          }
-          setRows(rowsData);
+    const getAllBarangKeluarAPI = async() => {
+      const data = await getAllBarangKeluar(detail);
+      let rowsData = []
+      for (const barang of data){
+        const newBarang = {
+          //kodebarang: barang.kodebarang,
+          namabarang: barang.namabarang,
+          kodeKeluar: barang.kodeKeluar, 
+          namaPengambil: barang.namaPengambil,
+          quantity: barang.quantity,
+          tgl: barang.tgl,
+          // proyek: barang.proyek,
+          keterangan: barang.keterangan,
+          tujuan: barang.tujuan,
+          satuan: barang.satuan
+        }
+        rowsData.push(newBarang);
       }
+      setRows(rowsData);
+    }
+    useEffect(() => {
       getAllBarangKeluarAPI();
-  }, [])
+    }, [])
+
+    const refresh = () => {
+      getAllBarangKeluarAPI();
+    }
   
     return (
       <div className="content-wrapper">
@@ -127,6 +142,11 @@ function BarangKeluar(props) {
                           <AddIcon />
                         </Tooltip>
                       </IconButton>
+                      <IconButton onClick={refresh}>
+                      <Tooltip title="refresh">
+                        <RefreshIcon />
+                      </Tooltip>
+                    </IconButton>
                       <AddBarangKeluar open={addItem} close={closeAddDialog} />
                     </div>
                   </div>
