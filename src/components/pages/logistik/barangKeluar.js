@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import TabelBarang from "../../Table/TabelBarang";
 import AddIcon from "@mui/icons-material/Add";
 import SearchBarang from "../../Table/SearchBarang";
-import { IconButton, Tooltip } from "@mui/material";
+import { CircularProgress, IconButton, Tooltip } from "@mui/material";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import AddBarangKeluar from "../../Dialog/AddBarangKeluar";
 
@@ -88,10 +88,22 @@ function BarangKeluar(props) {
         }
         rowsData.push(newBarang);
       }
-      setRows(rowsData);
+      return rowsData;
     }
+    
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
-      getAllBarangKeluarAPI();
+      setLoading(true);
+      setTimeout(()=> 
+      
+        getAllBarangKeluarAPI()
+        .then((data)=>{
+          setRows(data)
+        }).finally(()=>{
+          setLoading(false)
+        })
+      , 2000)
     }, [])
 
     const refresh = () => {
@@ -151,11 +163,17 @@ function BarangKeluar(props) {
                     </div>
                   </div>
                   {/* /.card-header */}
-                  <div className="card-body">
-                    <TabelBarang 
-                      meta={meta}
-                      data={searchValue === "" ? rows : filterSearch(searchValue)} 
-                    />
+                  <div className="card-body"
+                   
+                  >
+                    {loading ? 
+                      <CircularProgress />
+                      : 
+                      <TabelBarang 
+                        meta={meta}
+                        data={searchValue === "" ? rows : filterSearch(searchValue)} 
+                      />
+                    }
                   </div>
                   {/* /.card-body */}
                 </div>

@@ -10,6 +10,7 @@ import {
   Paper,
   IconButton,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
 
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -135,11 +136,25 @@ export default function BarangMasuk(props) {
         rowsData.push(newBarang);
       }
     }
-    setRows(rowsData);
+    return rowsData
   }
 
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
-      getBarangMasukAPI();
+    setLoading(true);
+
+    setTimeout( () =>
+      getBarangMasukAPI().
+      then((data) =>{
+        setRows(data)
+      })
+      .finally(()=>{
+        setLoading(false)
+      })
+        , 
+        2000
+    )
   }, [])
 
   const refresh = () => {
@@ -206,11 +221,21 @@ export default function BarangMasuk(props) {
                   </div>
                 </div>
                 {/* /.card-header */}
-                <div className="card-body">
-                  <TabelBarang
-                    meta={meta}
-                    data={searchValue === "" ? rows : filterSearch(searchValue)}
-                  />
+                <div className="card-body"
+                  style={{
+                    display:'flex',
+                    justifyContent:'center'
+                  }}
+                >
+                  {
+                    loading ? 
+                    <CircularProgress />
+                    :
+                    <TabelBarang
+                      meta={meta}
+                      data={searchValue === "" ? rows : filterSearch(searchValue)}
+                    />
+                  }
                 </div>
                 {/* /.card-body */}
               </div>

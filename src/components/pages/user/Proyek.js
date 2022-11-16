@@ -19,18 +19,20 @@ export default function Proyek() {
     const navigate = useNavigate();
 
     const [proyek, setProyek] = useState([]);
+    
+    async function getProyekAPI() {
+    const datas = await seeAllProyek();
+    let rowsData = [];
+    for (const data of datas) {
+        const newData = {
+        namaProyek: data.namaProyek,
+        };
+        rowsData.push(newData);
+    }
+    setProyek(rowsData);
+    }
+
     useEffect(() => {
-        async function getProyekAPI() {
-        const datas = await seeAllProyek();
-        let rowsData = [];
-        for (const data of datas) {
-            const newData = {
-            namaProyek: data.namaProyek,
-            };
-            rowsData.push(newData);
-        }
-        setProyek(rowsData);
-        }
         getProyekAPI();
     }, []);
 

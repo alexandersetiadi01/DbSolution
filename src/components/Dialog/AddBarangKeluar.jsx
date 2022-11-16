@@ -151,7 +151,7 @@ export default function AddBarangKeluar (props){
 
     const handleTanggal = (newValue) => {
         setTanggal(newValue)
-        setInputs({ ...inputs, 'tgl' : newValue.format('DD/M/YYYY') });
+        setInputs({ ...inputs, 'tgl' : newValue.format('DD/MM/YYYY') });
     };
 
     const [namaBarang, setNamaBarang] = React.useState(null);

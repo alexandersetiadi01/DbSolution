@@ -24,6 +24,7 @@ import {
   Switch,
   Autocomplete,
   Tooltip,
+  TextField,
   FormControl,
   Select,
   MenuItem,
@@ -34,6 +35,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { Notif } from "./notification";
 import { InConfirmation } from "./Confirmation";
+
 import {
   addBanyakBarangMasuk,
   getAllSatuan,
@@ -44,6 +46,15 @@ import {
   setSelectedProyek,
   updateOutstanding,
 } from "../API/repository";
+
+import { 
+  LocalizationProvider, 
+  DesktopDatePicker,
+} from '@mui/x-date-pickers';
+
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs'
+
+
 
 const proyekAsal = [
   {
@@ -123,6 +134,7 @@ export default function AddBarangMasuk(props) {
     setAlert(false);
   };
 
+  const [tanggal, setTanggal] = React.useState(dayjs(Date.now()));
   const getDate = () => {
     var today = dayjs().format("DD/MM/YYYY");
     return today;
@@ -189,6 +201,12 @@ export default function AddBarangMasuk(props) {
   let deleteArrayBarang = (i, e) => {
     // arrayBarang.pop(i);
   };
+
+  const handleTanggal = (newValue) => {
+    setTanggal(newValue)
+    setInputs({ ...inputs, 'tgl' : newValue.format('DD/MM/YYYY') });
+  };
+
 
   const [suratJalan, setSuratJalan] = useState(true);
   const pakaiSuratJalan = () => {
@@ -289,7 +307,27 @@ export default function AddBarangMasuk(props) {
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextValidator
+                <LocalizationProvider 
+                      dateAdapter={AdapterDayjs}
+                  >
+                  <DesktopDatePicker
+                      label='Tanggal'
+                      value={tanggal}
+                      onChange={handleTanggal}
+                      inputFormat='DD/MM/YYYY'
+                      renderInput={(params)=>
+                          <TextField 
+                              fullWidth
+                              variant='standard'
+                              sx={{
+                                  marginTop:1
+                              }}
+                              {...params}  
+                          />
+                      }
+                  />
+                </LocalizationProvider>
+                {/* <TextValidator
                   fullWidth
                   focused
                   margin="dense"
@@ -303,7 +341,7 @@ export default function AddBarangMasuk(props) {
                   validators={["required"]}
                   errorMessages={["required"]}
                   autoComplete="off"
-                />
+                /> */}
               </Grid>
               <Grid item xs={6}>
                 <FormControl fullWidth sx={{ margin: "dense", marginTop: 1 }}>
