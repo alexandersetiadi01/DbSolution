@@ -141,7 +141,7 @@ export default function BarangMasuk(props) {
 
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
+  const load = () => {
     setLoading(true);
 
     setTimeout( () =>
@@ -155,10 +155,14 @@ export default function BarangMasuk(props) {
         , 
         2000
     )
+  }
+
+  useEffect(() => {
+    load();
   }, [])
 
   const refresh = () => {
-    getBarangMasukAPI();
+    load();
   }
 
   return (

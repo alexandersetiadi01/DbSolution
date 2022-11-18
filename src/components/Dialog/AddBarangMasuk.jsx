@@ -38,6 +38,7 @@ import { InConfirmation } from "./Confirmation";
 
 import {
   addBanyakBarangMasuk,
+  getAllBarangMasuk,
   getAllSatuan,
   getNamaMasterBarang,
   getSelectedProyek,
@@ -170,7 +171,7 @@ export default function AddBarangMasuk(props) {
     setArrayBarang([
       ...arrayBarang,
       {
-        namaBarang: "",
+        namabarang: "",
         quantity: "",
         satuan: "",
         noSuratJalan: inputs.noSuratJalan,
@@ -183,6 +184,7 @@ export default function AddBarangMasuk(props) {
         keterangan: "",
         proyek: inputs.proyek,
         supplier: inputs.supplier,
+        kodePO: ''
       },
     ]);
   };
@@ -253,24 +255,24 @@ export default function AddBarangMasuk(props) {
           arrayBarang[i].satuan = "kg";
         }
       }
-      await addBanyakBarangMasuk(arrayBarang);
+      addBanyakBarangMasuk(arrayBarang);
+      inventoryMasuk(arrayBarang);
       props.close();
       closeConfirm();
       setInputs(detail);
       setArrayBarang([]);
-      
+      getAllBarangMasuk();
       //notif berhasil add
       setAlertType("success");
       setMessage("Berhasil menyimpan barang masuk");
       setAlert(true);
     }catch(e){
       //notif gagal add
-      setAlertType("success");
+      setAlertType("error");
       setMessage(e);
       setAlert(true);
       
     }
-    // inventoryMasuk(arrayBarang);
     // await updateOutstanding(arrayBarang);
 
     
@@ -307,7 +309,7 @@ export default function AddBarangMasuk(props) {
                 />
               </Grid>
               <Grid item xs={6}>
-                <LocalizationProvider 
+                {/* <LocalizationProvider 
                       dateAdapter={AdapterDayjs}
                   >
                   <DesktopDatePicker
@@ -326,8 +328,8 @@ export default function AddBarangMasuk(props) {
                           />
                       }
                   />
-                </LocalizationProvider>
-                {/* <TextValidator
+                </LocalizationProvider> */}
+                <TextValidator
                   fullWidth
                   focused
                   margin="dense"
@@ -341,7 +343,7 @@ export default function AddBarangMasuk(props) {
                   validators={["required"]}
                   errorMessages={["required"]}
                   autoComplete="off"
-                /> */}
+                />
               </Grid>
               <Grid item xs={6}>
                 <FormControl fullWidth sx={{ margin: "dense", marginTop: 1 }}>
@@ -487,14 +489,14 @@ export default function AddBarangMasuk(props) {
                             // autoFocus
                             margin="dense"
                             //labelid="Nama Barang"
-                            id="namaBarang"
-                            name="namaBarang"
-                            placeholder="namaBarang"
+                            id="namabarang"
+                            name="namabarang"
+                            placeholder="namabarang"
                             variant="standard"
                             type="text"
                             //   InputProps={{ inputProps: { maxLength: 6 } }}
                             // defaultValue={item.namaBarang}
-                            value={item.namaBarang}
+                            value={item.namabarang}
                             onChange={(e) => handleArrayBarang(index, e)}
                             validators={["required"]}
                             errorMessages={["required"]}

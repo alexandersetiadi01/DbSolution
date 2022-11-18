@@ -74,6 +74,12 @@ async function getBarangMasukPO(namabarang){
     return response.data;
 }
 
+async function getNamaBarangMasuk(barang){
+    const response = await axios.post(API_HOST + "/api/barangMasuk/getNamaBarangMasuk", barang);
+
+    return response.data;
+}
+
 //barang sisa (gk pake)
 async function addBarangSisa(barang) {
     const response = await axios.post(API_HOST + "/api/barangSisa/addbarangSisa", barang);
@@ -366,7 +372,8 @@ async function addRAP(barang){
 
 export{
     createBarang, getAllMasterBarang, getMasterBarangByName, checkMasterBarang, updateMasterBarang, getNamaMasterBarang,
-    addBarangMasuk, getAllBarangMasuk, addBarangSisa,getAllBarangSisa, getBarangMasukPO, addBanyakBarangMasuk, getSuratJalan,
+    addBarangMasuk, getAllBarangMasuk, getNamaBarangMasuk,
+    addBarangSisa,getAllBarangSisa, getBarangMasukPO, addBanyakBarangMasuk, getSuratJalan,
     addBarangKeluar, getAllBarangKeluar,
     getInventory,
     inventoryKeluar, inventoryMasuk, newInventory, 

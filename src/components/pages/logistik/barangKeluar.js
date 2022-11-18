@@ -91,9 +91,8 @@ function BarangKeluar(props) {
       return rowsData;
     }
     
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
+    const [loading, setLoading] = useState(false);
+    const load = () => {
       setLoading(true);
       setTimeout(()=> 
       
@@ -104,10 +103,14 @@ function BarangKeluar(props) {
           setLoading(false)
         })
       , 2000)
+    }
+
+    useEffect(() => {
+      load();
     }, [])
 
     const refresh = () => {
-      getAllBarangKeluarAPI();
+      load();
     }
   
     return (

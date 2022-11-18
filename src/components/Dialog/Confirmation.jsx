@@ -114,8 +114,8 @@ function OutConfirmation(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.cancel} autoFocus>Cancel</Button>
-                    <Button onClick={props.handleRemove} color="error">
-                        Remove
+                    <Button onClick={props.handleAdd} color="error">
+                        Add
                     </Button>
                 </DialogActions>
             </Dialog>
