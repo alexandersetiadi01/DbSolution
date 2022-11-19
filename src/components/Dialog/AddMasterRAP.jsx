@@ -38,8 +38,7 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { OutConfirmation } from "./Confirmation";
 import { Notif } from "./notification";
 import {
-  addActivityKeluar,
-  addBarangKeluar,
+  addActivityKeluar,  
   getAllBarangKeluar,
   getAllBarangMasuk,
   getAllSatuan,
@@ -71,7 +70,7 @@ const barang = [
 
 const satuanList = ["Kg", "liter"];
 
-export default function AddBarangKeluar(props) {
+export default function AddMasterRAP(props) {
   const [message, setMessage] = useState();
   const [alertType, setAlertType] = useState();
   const [alert, setAlert] = useState(false);
@@ -82,18 +81,9 @@ export default function AddBarangKeluar(props) {
   const proyek = getSelectedProyek();
 
   const detail = {
-    namaBarang: "",
-    kodeKeluar: "",
-    namaPengambil: "",
-    quantity: 1,
-    progress: "",
-    // tgl: dayjs(Date.now()).format("DD/MM/YYYY"),
-    tgl: "",
-    proyek: proyek,
-    username: "",
-    keterangan: "",
-    tujuan: "",
+    jenisBahan: '',
     satuan: "",
+    RAP: '',
   };
 
   const [confirm, setConfirm] = useState(false);
@@ -160,10 +150,10 @@ export default function AddBarangKeluar(props) {
 
   const add = async () => {
     try {
-      addBarangKeluar(inputs);
+    //   AddMasterRAP(inputs);
       
       setInputs(detail);
-      getAllBarangKeluar();
+    //   getAllBarangKeluar();
       //notif berhasil add
       setAlertType("success");
       setMessage("Berhasil menyimpan barang masuk");
@@ -182,13 +172,6 @@ export default function AddBarangKeluar(props) {
     }
   };
 
-  const [tanggal, setTanggal] = React.useState(dayjs(Date.now()));
-
-  const handleTanggal = (newValue) => {
-    setTanggal(newValue);
-    setInputs({ ...inputs, tgl: newValue.format("DD/MM/YYYY") });
-  };
-
   const [namaBarang, setNamaBarang] = React.useState(null);
   const handleNamaBarang = (event, newValue) => {
     setNamaBarang(newValue);
@@ -198,78 +181,12 @@ export default function AddBarangKeluar(props) {
   return (
     <>
       <Dialog open={props.open} onClose={props.close} maxWidth="lg">
-        <DialogTitle>Barang Keluar</DialogTitle>
+        <DialogTitle>Master RAP</DialogTitle>
         <ValidatorForm onSubmit={openConfirm}>
           <DialogContent>
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            >
-              <Grid item xs={6}>
-                {/* <LocalizationProvider 
-                                dateAdapter={AdapterDayjs}
-                            >
-                            <DesktopDatePicker
-                                label='Tanggal'
-                                value={tanggal}
-                                onChange={handleTanggal}
-                                inputFormat='DD/MM/YYYY'
-                                renderInput={(params)=>
-                                    <TextField 
-                                        fullWidth
-                                        variant='standard'
-                                        sx={{
-                                            marginTop:1
-                                        }}
-                                        {...params}  
-                                    />
-                                }
-                            />
-                            </LocalizationProvider> */}
-                <TextValidator
-                  fullWidth
-                  focused
-                  margin="dense"
-                  id="tgl"
-                  name="tgl"
-                  label="tgl"
-                  value={inputs.tgl}
-                  onChange={handleInputChange}
-                  type="date"
-                  variant="standard"
-                  validators={["required"]}
-                  errorMessages={["required"]}
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextValidator
-                  fullWidth
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  name="namaPengambil"
-                  label="Nama Pengambil"
-                  value={inputs.namaPengambil}
-                  onChange={handleInputChange}
-                  type="text"
-                  variant="standard"
-                  validators={["required"]}
-                  errorMessages={["required"]}
-                  autoComplete="off"
-                />
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            >
-              <Grid item xs={6}>
                 <FormControl fullWidth sx={{ margin: "dense", marginTop: 1 }}>
                   <InputLabel id="namaBarang" sx={{ margin: "dense" }}>
-                    Nama Barang
+                    Jenis Bahan
                   </InputLabel>
                   <Select
                     // fullWidth
@@ -324,18 +241,16 @@ export default function AddBarangKeluar(props) {
                     )}
                   />
                 </FormControl> */}
-              </Grid>
-              <Grid item xs={3}>
                 <TextField
-                  name="quantity"
+                  name="RAP"
                   sx={{
                     marginTop: 1,
                   }}
-                  value={inputs.quantity}
+                  value={inputs.RAP}
                   onChange={handleInputChange}
                   type="number"
                   variant="standard"
-                  label="Quantity"
+                  label="RAP"
                   InputProps={{
                     inputProps: {
                       min: 1,
@@ -343,8 +258,6 @@ export default function AddBarangKeluar(props) {
                     },
                   }}
                 />
-              </Grid>
-              <Grid item xs={3}>
                 <FormControl fullWidth sx={{ margin: "dense", marginTop: 1 }}>
                   <InputLabel id="satuan" sx={{ margin: "dense" }}>
                     Satuan
@@ -392,54 +305,6 @@ export default function AddBarangKeluar(props) {
                     <TextField {...params} variant="standard" label="Satuan" />
                   )}
                 /> */}
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            >
-              <Grid item xs={6}>
-                <InputLabel
-                  autoFocus
-                  id="cekPindahProyek"
-                  sx={{ margin: "dense" }}
-                >
-                  Pindah Proyek
-                </InputLabel>
-                <Switch
-                  id="cekPindahProyek"
-                  labelId="cekPindahProyek"
-                  // inputRef={value => value && value.focus()}
-                  label="cekPindahProyek"
-                  inputProps={{ "aria-label": "controlled" }}
-                  checked={pindahProyek}
-                  onChange={handlePindahProyek}
-                  defaultChecked
-                />
-              </Grid>
-              {pindahProyek ? (
-                <Grid item sx={6}>
-                  <TextValidator
-                    fullWidth
-                    margin="dense"
-                    id="tujuan"
-                    label="Proyek Tujuan "
-                    name="tujuan"
-                    value={inputs.tujuan}
-                    onChange={handleInputChange}
-                    type="text"
-                    variant="standard"
-                    validators={["required"]}
-                    errorMessages={["required"]}
-                    autoComplete="off"
-                  />
-                </Grid>
-              ) : (
-                <></>
-              )}
-            </Grid>
-            <Grid container>
               <TextField
                 fullWidth
                 id="keterangan"
@@ -451,7 +316,7 @@ export default function AddBarangKeluar(props) {
                 minRows={4}
                 maxRows={6}
               />
-            </Grid>
+           
           </DialogContent>
           <DialogActions>
             <Button color="error" onClick={props.close}>

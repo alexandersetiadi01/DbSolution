@@ -7,12 +7,13 @@ import Login from "./components/pages/user/login";
 import BarangMasuk from "./components/pages/logistik/barangMasuk";
 import BarangKeluar from "./components/pages/logistik/barangKeluar";
 import Inventory from "./components/pages/logistik/Inventory";
-import RAP from './components/pages/RAP/RAP';
 import Progress from './components/pages/RAP/Progress';
 import Proyek from './components/pages/user/Proyek'
 import MasterBarang from './components/pages/Master/masterBarang';
 import CodeMaster from './components/pages/Master/codeMaster';
 import CodeDetail from './components/pages/Master/codeDetail';
+import MasterRAP from './components/pages/RAP/masterRAP';
+import DetailRAP from './components/pages/RAP/detailRAP';
 
 function LoginLayout (){
   return (
@@ -67,7 +68,8 @@ function App() {
           <Route path="Logistik/Inventory" element={<Inventory />}></Route>
 
           {/* RAP */}
-          <Route path="RAP/detailRAP" element={<RAP />}></Route>
+          <Route path="RAP/masterRAP" element={<MasterRAP />}></Route>
+          <Route path="RAP/detailRAP" element={<DetailRAP />}></Route>
           <Route path="RAP/Progress" element={<Progress />}></Route>
         </Route>
 

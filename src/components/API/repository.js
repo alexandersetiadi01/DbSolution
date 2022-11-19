@@ -96,7 +96,7 @@ async function getAllBarangSisa(){
 //barang keluar
 async function addBarangKeluar(barang) {
     const response = await axios.post(API_HOST + "/api/barangKeluar", barang);
-  
+    
     return response.data;
 }
 

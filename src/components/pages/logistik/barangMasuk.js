@@ -13,7 +13,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import RefreshIcon from '@mui/icons-material/Refresh';
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 // import AddBarangMasuk from "../../Dialog/barangMasuk.js/AddBarangMasuk";
 import { Berhasil, Gagal } from "../../Dialog/notification";
@@ -21,10 +21,66 @@ import AddBarangMasuk from "../../Dialog/AddBarangMasuk";
 import { getAllBarangMasuk, getSelectedProyek } from "../../API/repository";
 
 const meta = [
-  "Nama Barang", "Kode Masuk", "Surat Jalan", "Nama Penerima", "Quantity", "Satuan", "Tanggal", "Lokasi", "Keterangan",  "Action"
-]
+  "Nama Barang",
+  "Kode Masuk",
+  "Surat Jalan",
+  "Nama Penerima",
+  "Quantity",
+  "Satuan",
+  "Tanggal",
+  "Lokasi",
+  "Keterangan",
+  "Action",
+];
 
-// const rows = data;
+const columns = [
+  {
+    title: "KodeMasuk",
+    field: "kodeMasuk",
+    width: "5%",
+  },
+  {
+    title: "noSuratJalan",
+    field: "noSuratJalan",
+    width: "5%",
+  },
+  {
+    title: "namabarang",
+    field: "namabarang",
+    width: "5%",
+  },
+  {
+    title: "namaPenerima",
+    field: "namaPenerima",
+    width: "5%",
+  },
+  {
+    title: "quantity",
+    field: "quantity",
+    width: "5%",
+  },
+  {
+    title: "satuan",
+    field: "satuan",
+    width: "5%",
+  },
+  {
+    title: "tgl",
+    field: "tgl",
+    type: "date",
+    // width: '25%'
+  },
+  {
+    title: "lokasi",
+    field: "lokasi",
+    width: "5%",
+  },
+  {
+    title: "keterangan",
+    field: "keterangan",
+    width: "5%",
+  },
+];
 
 export default function BarangMasuk(props) {
   const proyek = getSelectedProyek();
@@ -46,7 +102,6 @@ export default function BarangMasuk(props) {
     satuan: "",
     supplier: "",
   };
-
 
   /*Add Item Inputs*/
   const [inputs, setInputs] = useState(detail);
@@ -115,55 +170,55 @@ export default function BarangMasuk(props) {
   // data barang masuk dari DB
   const [rows, setRows] = useState([]);
 
-  const getBarangMasukAPI = async() => {
+  const getBarangMasukAPI = async () => {
     const data = await getAllBarangMasuk(detail);
-    let rowsData = []
-    for (const barang of data){
-      if(barang.proyek === proyek){
+    let rowsData = [];
+    for (const barang of data) {
+      if (barang.proyek === proyek) {
         const newBarang = {
           //kodebarang: barang.kodebarang,
           namabarang: barang.namabarang,
-          kodemasuk: barang.kodemasuk, 
+          kodemasuk: barang.kodemasuk,
           noSuratJalan: barang.noSuratJalan,
           namaPenerima: barang.namaPenerima,
-          quantity: barang.quantity, 
-          satuan: barang.satuan,  
+          quantity: barang.quantity,
+          satuan: barang.satuan,
           tgl: barang.tgl,
           lokasi: barang.lokasi,
           // proyek: barang.proyek,
-          keterangan: barang.keterangan
-        }
+          keterangan: barang.keterangan,
+        };
         rowsData.push(newBarang);
       }
     }
-    return rowsData
-  }
+    return rowsData;
+  };
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const load = () => {
     setLoading(true);
 
-    setTimeout( () =>
-      getBarangMasukAPI().
-      then((data) =>{
-        setRows(data)
-      })
-      .finally(()=>{
-        setLoading(false)
-      })
-        , 
-        2000
-    )
-  }
+    setTimeout(
+      () =>
+        getBarangMasukAPI()
+          .then((data) => {
+            setRows(data);
+          })
+          .finally(() => {
+            setLoading(false);
+          }),
+      2000
+    );
+  };
 
   useEffect(() => {
     load();
-  }, [])
+  }, []);
 
   const refresh = () => {
     load();
-  }
+  };
 
   return (
     <div className="content-wrapper">
@@ -218,28 +273,31 @@ export default function BarangMasuk(props) {
                         <RefreshIcon />
                       </Tooltip>
                     </IconButton>
-                    <AddBarangMasuk
-                      open={addItem} 
-                      close={closeAddDialog} 
-                    />
+                    <AddBarangMasuk open={addItem} close={closeAddDialog} />
                   </div>
                 </div>
                 {/* /.card-header */}
-                <div className="card-body"
+                <div
+                  className="card-body"
                   style={{
-                    display:'flex',
-                    justifyContent:'center'
+                    display: "flex",
+                    justifyContent: "center",
                   }}
                 >
-                  {
-                    loading ? 
+                  {loading ? (
                     <CircularProgress />
-                    :
-                    <TabelBarang
-                      meta={meta}
-                      data={searchValue === "" ? rows : filterSearch(searchValue)}
-                    />
-                  }
+                  ) : (
+                    <>
+                      <TabelBarang
+                        meta={meta}
+                        data={
+                          searchValue === "" ? rows : filterSearch(searchValue)
+                        }
+                      />
+                      {/* gagal yg table dibawah ini */}
+                      {/* <TableBarangMasuk columns={columns} data={rows} /> */}
+                    </>
+                  )}
                 </div>
                 {/* /.card-body */}
               </div>

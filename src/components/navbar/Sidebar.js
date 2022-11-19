@@ -106,7 +106,7 @@ export default function Sidebar() {
                   </li>
                 </ul>
               </li>
-              <li className="nav-item menu">
+              <li className="nav-item menu-open">
                 {/* <a href="#" className="nav-link active"> */}
                 <a href="#" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt" />
@@ -116,6 +116,12 @@ export default function Sidebar() {
                   </p>
                 </a>
                 <ul className="nav nav-treeview">
+                <li className="nav-item">
+                    <Link to="/dashboard/RAP/masterRAP" className="nav-link">
+                      <i className="far fa-circle nav-icon" />
+                      <p>Master RAP</p>
+                    </Link>
+                  </li>
                   <li className="nav-item">
                     <Link to="/dashboard/RAP/detailRAP" className="nav-link">
                       <i className="far fa-circle nav-icon" />
