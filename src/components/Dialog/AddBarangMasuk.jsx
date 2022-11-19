@@ -282,7 +282,7 @@ export default function AddBarangMasuk(props) {
 
   return (
     <>
-      <Dialog open={props.open} onClose={props.close} maxWidth="lg">
+      <Dialog fullwidth open={props.open} onClose={props.close} maxWidth="lg">
         <DialogTitle><b>Barang Masuk</b></DialogTitle>
         <DialogContent sx={{ paddingBottom: 0 }} dividers>
           <ValidatorForm onSubmit={addArrayBarang}>
@@ -442,7 +442,7 @@ export default function AddBarangMasuk(props) {
                   </FormControl>
                 )}
               </Grid>
-              <Grid item xs={2}>
+              <Grid item>
                 <Tooltip title="Tambah Barang">
                   <Button variant="contained" type="submit">
                     <AddIcon />
@@ -450,7 +450,7 @@ export default function AddBarangMasuk(props) {
                   </Button>
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item>
                 <Tooltip title="Delete Barang">
                   <Button
                     variant="contained"
@@ -585,12 +585,7 @@ export default function AddBarangMasuk(props) {
                 </TableBody>
               </Table>
             </TableContainer>
-            <DialogActions
-              sx={{
-                marginBottom: 0,
-                marginTop: 2,
-              }}
-            >
+            <DialogActions>
               <Button color="error" onClick={props.close}>
                 Cancel
               </Button>

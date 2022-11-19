@@ -137,7 +137,7 @@ export default function AddMasterBarang(props) {
 
   return (
     <>
-      <Dialog open={props.open} onClose={props.close} maxWidth="lg">
+      <Dialog fullwidth open={props.open} onClose={props.close} maxWidth="lg">
         <DialogTitle><b>Master Barang</b></DialogTitle>
         <ValidatorForm onSubmit={addMasterBarang}>
           <DialogContent dividers>

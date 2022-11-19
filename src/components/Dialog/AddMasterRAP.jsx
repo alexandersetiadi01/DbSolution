@@ -180,7 +180,7 @@ export default function AddMasterRAP(props) {
 
   return (
     <>
-      <Dialog open={props.open} onClose={props.close} maxWidth="lg">
+      <Dialog fullwidth open={props.open} onClose={props.close} maxWidth="lg">
         <DialogTitle><b>Master RAP</b></DialogTitle>
         <ValidatorForm onSubmit={openConfirm}>
           <DialogContent dividers>
