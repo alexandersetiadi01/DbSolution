@@ -283,8 +283,8 @@ export default function AddBarangMasuk(props) {
   return (
     <>
       <Dialog open={props.open} onClose={props.close} maxWidth="lg">
-        <DialogTitle>Barang Masuk</DialogTitle>
-        <DialogContent sx={{ paddingBottom: 0 }}>
+        <DialogTitle><b>Barang Masuk</b></DialogTitle>
+        <DialogContent sx={{ paddingBottom: 0 }} dividers>
           <ValidatorForm onSubmit={addArrayBarang}>
             <Grid
               container

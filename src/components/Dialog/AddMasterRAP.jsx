@@ -181,9 +181,9 @@ export default function AddMasterRAP(props) {
   return (
     <>
       <Dialog open={props.open} onClose={props.close} maxWidth="lg">
-        <DialogTitle>Master RAP</DialogTitle>
+        <DialogTitle><b>Master RAP</b></DialogTitle>
         <ValidatorForm onSubmit={openConfirm}>
-          <DialogContent>
+          <DialogContent dividers>
                 <FormControl fullWidth sx={{ margin: "dense", marginTop: 1 }}>
                   <InputLabel id="namaBarang" sx={{ margin: "dense" }}>
                     Jenis Bahan

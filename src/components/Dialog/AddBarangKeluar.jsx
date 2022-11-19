@@ -198,9 +198,9 @@ export default function AddBarangKeluar(props) {
   return (
     <>
       <Dialog open={props.open} onClose={props.close} maxWidth="lg">
-        <DialogTitle>Barang Keluar</DialogTitle>
+        <DialogTitle><b>Barang Keluar</b></DialogTitle>
         <ValidatorForm onSubmit={openConfirm}>
-          <DialogContent>
+          <DialogContent dividers>
             <Grid
               container
               rowSpacing={1}

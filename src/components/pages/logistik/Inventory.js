@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import TabelBarang from "../../Table/TabelBarang";
 import { getInventory, getSelectedProyek } from "../../API/repository";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, IconButton, Tooltip } from "@mui/material";
+import SearchBarang from "../../Table/SearchBarang";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import AddIcon from "@mui/icons-material/Add";
 
 const meta = ["ID", "Nama Barang", "Quantity", "Satuan"];
 
@@ -27,6 +30,19 @@ function Inventory(props) {
     }
     return rowsData;
   }
+  const [searchValue, changeSearchValue] = useState("");
+
+  const changeValue = (event) => {
+    changeSearchValue(event.target.value);
+    // console.log('Div lost focus');
+  };
+
+  const filterSearch = (searchKey) => {
+    const filteredRows = rows.filter((row) =>
+      row.name.toLowerCase().includes(searchKey.toLowerCase())
+    );
+    return filteredRows;
+  };
 
   const [loading, setLoading] = useState(false)
 
@@ -47,6 +63,9 @@ function Inventory(props) {
 
   }, []);
 
+  const refresh = () => {
+    
+  }
   
   return (
     <div className="content-wrapper">
@@ -74,8 +93,30 @@ function Inventory(props) {
           <div className="row">
             <div className="col-12">
               <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">List Inventory</h3>
+              <div
+                  className="card-header"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="card-header-title">
+                    <h3 className="card-title">Inventory</h3>
+                  </div>
+                  <div className="card-search" style={{ marginLeft: "auto" }}>
+                    <SearchBarang
+                      value={searchValue}
+                      changeValue={(event) => changeValue(event)}
+                    />
+                  </div>
+                  <div className="add-item" style={{ marginLeft: "5px" }}>
+                    <IconButton onClick={refresh}>
+                      <Tooltip title="refresh">
+                        <RefreshIcon />
+                      </Tooltip>
+                    </IconButton>
+                    
+                  </div>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body"

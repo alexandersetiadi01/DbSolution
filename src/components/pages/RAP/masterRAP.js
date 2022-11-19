@@ -86,6 +86,9 @@ function MasterRAP(props) {
     setAddItem(false);
   };
 
+  const refresh = () => {
+
+  }
   return (
     <div className="content-wrapper">
       {/* Content Header (Page header) */}
@@ -112,15 +115,15 @@ function MasterRAP(props) {
           <div className="row">
             <div className="col-12">
               <div className="card">
-                <div
+              <div
                   className="card-header"
                   style={{
                     display: "flex",
-                    // alignItems: "center",
+                    alignItems: "center",
                   }}
                 >
                   <div className="card-header-title">
-                    <h3 className="card-title">List Barang Masuk</h3>
+                    <h3 className="card-title">Master RAP</h3>
                   </div>
                   <div className="card-search" style={{ marginLeft: "auto" }}>
                     <SearchBarang
@@ -134,23 +137,17 @@ function MasterRAP(props) {
                         <AddIcon />
                       </Tooltip>
                     </IconButton>
-                    <IconButton onClick={''}>
+                    <IconButton onClick={refresh}>
                       <Tooltip title="refresh">
                         <RefreshIcon />
                       </Tooltip>
                     </IconButton>
-                    <AddMasterRAP
-                      open={addItem} 
-                      close={closeAddDialog} 
-                    />
+                    <AddMasterRAP open={addItem} close={closeAddDialog} />
                   </div>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body"
-                  style={{
-                    display:'flex',
-                    justifyContent:'center'
-                  }}
+                  
                 >
                   {
                     loading ? 

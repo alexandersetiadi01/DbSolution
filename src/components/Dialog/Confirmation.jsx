@@ -27,10 +27,10 @@ function OutConfirmation(props) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
-                    Konfirmasi
+                <DialogTitle>
+                    <b>Konfirmasi</b>
                 </DialogTitle>
-                <DialogContent>
+                <DialogContent dividers>
                 <DialogContentText id="alert-dialog-description">
                     <Grid 
                         container 
