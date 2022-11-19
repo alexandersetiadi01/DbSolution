@@ -1,10 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { getUserName } from "../API/repository";
 
 export default function Sidebar() {
   const navigate = useNavigate();
 
+  const user = getUserName();
+  
   return (
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
@@ -17,7 +20,7 @@ export default function Sidebar() {
             </div>
             <div className="info">
               <a href="#" className="d-block">
-                User
+                <b>{user.username}</b>
               </a>
             </div>
           </div>
